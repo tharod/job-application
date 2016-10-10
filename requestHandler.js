@@ -47,7 +47,7 @@ function renderFullPage(component,initialState){
     <html>
       <head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
-        <title>Redux Universal Example</title>
+        <title>Job Application</title>
       </head>
     <body>
       <div id="app">${component}</div>

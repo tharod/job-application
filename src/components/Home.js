@@ -4,7 +4,7 @@ export default class Home extends React.Component {
   render() {
     return (
       <div>
-        This is home test home
+        This is home test homeasdf I want to 1231111
       </div>
     );
   }

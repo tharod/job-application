@@ -6,9 +6,11 @@ import reduxThunk from 'redux-thunk';
 
 import { browserHistory } from 'react-router'
 import { routerMiddleware, push } from 'react-router-redux'
+import Immutable from 'immutable';
 
-export default function configureStore(initialState) {
+export default function configureStore(i_state) {
   const middleware = routerMiddleware(browserHistory)
+  const initialState = Immutable.Map(i_state);
 
   const store = createStore(
     rootReducer,
