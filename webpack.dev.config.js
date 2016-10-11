@@ -34,9 +34,36 @@ module.exports = {
       loader: 'style-loader!css-loader'
     },
     { test: /\.json$/, exclude: /node_modules/, loader: 'json'},
+   
+
+    { 
+        test: /\.png$/, 
+        loader: "url-loader?limit=100000" 
+      },
+      { 
+        test: /\.jpg$/, 
+        loader: "file-loader" 
+      },
+      {
+        test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, 
+        loader: 'url?limit=10000&mimetype=application/font-woff'
+      },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, 
+        loader: 'url?limit=10000&mimetype=application/octet-stream'
+      },
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, 
+        loader: 'file'
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, 
+        loader: 'url?limit=10000&mimetype=image/svg+xml'
+      }
+
     ]
   },
-  //http://stackoverflow.com/questions/29290301/cant-get-webpack-hot-module-replacement-to-work
+  
   devServer: {
     contentBase: PATHS.build,
     hot: true,      

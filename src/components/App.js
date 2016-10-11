@@ -1,6 +1,11 @@
 import React, { PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 
+if (typeof window != 'undefined' && window.document) {
+  require('../styles/css/custom.css')
+}
+
+
 class App extends React.Component {
 
   render() {
