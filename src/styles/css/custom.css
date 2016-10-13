@@ -2,47 +2,6 @@ body{
   background-color: #f9f9f9;
 }
 
-ul.nav.navbar-nav.navbar-right li button {
-  padding-top: 15px;
-  text-decoration: none;
-}
-
-.post-block{
-  margin-top: 30px;
-  margin-bottom: 30px;
-}
-
-.post-show-container{
-  border: 4px solid #DED7D4;  
-  padding-bottom: 20px;
-}
-
-.comment-show{
-  border-bottom: 1px solid #DED7D4;
-  margin-bottom: 10px;
-  padding-bottom: 11px;  
-}
-
-.comment-field{
-  height: 70px;
-  width: 350px;
-}
-
-.post-block img{
-  box-shadow: 10px 10px 5px #888888;
-}
-
-          
-.width-150{
-  width: 150px !important;
-  border-radius: inherit;
-  box-shadow: 10px 10px 5px #888888;
-}
-
-.margin-top-10{
-  margin-top: 10px;
-}
-
 
 /*Spinner/Loader*/
 /* Absolute Center Spinner */
