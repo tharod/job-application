@@ -10,6 +10,7 @@ const PATHS = {
 module.exports = {
   devtool: 'source-map',
   entry: [
+    'whatwg-fetch',
     'webpack/hot/dev-server',
     'webpack-hot-middleware/client',
     './src/index'

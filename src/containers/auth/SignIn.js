@@ -72,7 +72,7 @@ export class SignIn extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    auth: state.getIn(['auth']).auth
+    auth: state.getIn(['auth'])
   };
 }
 

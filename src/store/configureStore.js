@@ -10,7 +10,7 @@ import Immutable from 'immutable';
 
 export default function configureStore(i_state) {
   const middleware = routerMiddleware(browserHistory)
-  const initialState = Immutable.Map(i_state);
+  const initialState = Immutable.fromJS(i_state)
 
   const store = createStore(
     rootReducer,
