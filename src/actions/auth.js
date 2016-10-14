@@ -1,9 +1,7 @@
 import {ACTION_TYPES} from '../constants/ActionTypes'
 import 'whatwg-fetch';
 
-export function createSession() {
-  var email = 'test@test.com'
-  var password = '111111aA'
+export function createSession({email}, {password}) {
   return function(dispatch){
     const url = "http://localhost:3000/session/create";
     fetch(url, {
@@ -19,19 +17,20 @@ export function createSession() {
         })
       })
       .then(function(response){
-        // console.log("========first then======", response)
         return(response.json());
       })
       .then(function(data){
         if (data.result==0){
           dispatch({
             type: ACTION_TYPES.CREATE_SESSION,
-            auth: data
+            data: data
           })
         }else{
-
+          dispatch({
+            type: ACTION_TYPES.CREATE_SESSION_ERROR,
+            data: data
+          })
         }
-        // console.log("=======second then ", data)
       })
       .catch(function(error){
         console.log("Opps...", "Error while create createSession:: " + error);

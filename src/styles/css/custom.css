@@ -2,6 +2,10 @@ body{
   background-color: #f9f9f9;
 }
 
+.error-message{
+  color: #D63A3A;
+}
+
 
 /*Spinner/Loader*/
 /* Absolute Center Spinner */
@@ -124,3 +128,5 @@ body{
   }
 }
 /*End Spinner Loader*/
+
+

@@ -41,12 +41,12 @@ export class SignIn extends React.Component {
     )  
   }
 
-  handleSubmit({email, password}) {        
-    
+  handleSubmit({email, password}) {      
+    this.props.authActions.createSession({email}, {password})
   }
 
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const { handleSubmit, submitting, auth } = this.props;
     return (
       <div className="jumbotron center-block">
         <h3>Login</h3>
@@ -64,6 +64,7 @@ export class SignIn extends React.Component {
             <button type="submit" className="btn btn-default" disabled={submitting}>Login</button>
           </div>
         </form>
+          <div className='error-message'>{auth.getIn(['errors'])}</div>
       </div>
     );
   }
@@ -78,7 +79,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    AuthActions: bindActionCreators(AuthActions, dispatch)
+    authActions: bindActionCreators(AuthActions, dispatch)
   }
 }
 
