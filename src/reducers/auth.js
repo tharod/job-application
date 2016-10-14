@@ -13,6 +13,8 @@ export default function auth(state = initialState, action) {
       return state.merge({signed_in: true, user_id: data.user_id, token: data.token, errors: null })
     case ACTION_TYPES.CREATE_SESSION_ERROR:
       return state.merge({signed_in: false, user_id: null, token: null, errors: data.message })
+    case ACTION_TYPES.LOGOUT:
+      return state.merge({signed_in: false, user_id: null, token: null, errors: null })
     default:
       return state;
   }
