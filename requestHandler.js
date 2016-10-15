@@ -48,6 +48,7 @@ function renderFullPage(component,initialState){
       <head>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
         <title>Job Application</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
       </head>
     <body>
       <div id="app">${component}</div>
