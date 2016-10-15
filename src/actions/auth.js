@@ -1,6 +1,5 @@
 import {ACTION_TYPES} from '../constants/ActionTypes'
 import 'whatwg-fetch';
-import { browserHistory } from 'react-router';
 
 export function createSession({email, password}) {
   return function(dispatch){
@@ -26,7 +25,6 @@ export function createSession({email, password}) {
             type: ACTION_TYPES.CREATE_SESSION,
             data: data
           })
-          browserHistory.push('/search-job')
         }else{
           dispatch({
             type: ACTION_TYPES.CREATE_SESSION_ERROR,
@@ -45,8 +43,6 @@ export function destroySession() {
     dispatch({
       type: ACTION_TYPES.LOGOUT
     })
-
-    browserHistory.push('/')
   }
 }
 

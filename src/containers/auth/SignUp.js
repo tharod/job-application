@@ -40,7 +40,7 @@ export class SignUp extends React.Component {
   }
 
   componentDidUpdate (nextProps, nextState) {
-    console.log("nextProps.auth", nextProps.auth.getIn(['signed_in']))
+    console.log("nextProps.auth", nextProps.auth.getIn(['signedIn']))
   }
 
   renderField(field) {

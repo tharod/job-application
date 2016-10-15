@@ -20,7 +20,7 @@ class Header extends React.Component {
   }
 
   renderLinks() {
-    if (this.props.auth.getIn(['signed_in'])) {
+    if (this.props.auth.getIn(['signedIn'])) {
       return [
         <li className="nav-item" key={1}>
           <Link className="nav-link" to="#" onClick={(e)=> this.handleClick(e)}>Logout</Link>

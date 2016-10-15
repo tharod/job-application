@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as AuthActions from '../../actions/auth';
 import { bindActionCreators } from 'redux';
 import Immutable from 'immutable';
 
 import { Field, reduxForm } from 'redux-form/immutable'
+
+import { browserHistory } from 'react-router';
 
 const validate = values => {
   // IMPORTANT: values is an Immutable.Map here!
@@ -30,6 +32,25 @@ export class SignIn extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
+  componentDidUpdate(prevProps) {
+    console.log("==========================", prevProps)
+    const { dispatch, redirectUrl } = this.props
+
+    const isLoggingOut = prevProps.auth.get('signedIn') && !this.props.auth.get('signedIn')
+    const isLoggingIn = !prevProps.auth.get('signedIn') && this.props.auth.get('signedIn')
+
+    if (isLoggingIn) {
+      console.log("=========browserHistory=====", browserHistory)
+      browserHistory.push('/search-job')
+    } else if (isLoggingOut) {
+      browserHistory.push('/login')
+    }
+  }
+
+  // componentDidUpdate (nextProps, nextState) {
+  //   console.log("nextProps.auth", nextProps.auth.getIn(['signedIn']))
+  // }
+
   renderField(field) {
     var inputType = field.inputType ? field.inputType : 'text' 
     return(
@@ -42,7 +63,7 @@ export class SignIn extends React.Component {
   }
 
   handleSubmit({email, password}) {      
-    this.props.authActions.createSession({email}, {password})
+    this.props.authActions.createSession({email, password})
   }
 
   render() {
@@ -88,5 +109,9 @@ SignIn = reduxForm({
   asyncValidating: true,
   validate
 })(SignIn);
+
+SignIn.propTypes = {
+  router: React.PropTypes.object
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
