@@ -32,20 +32,20 @@ export class SignIn extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidUpdate(prevProps) {
-    console.log("==========================", prevProps)
-    const { dispatch, redirectUrl } = this.props
+  // componentDidUpdate(prevProps) {
+  //   console.log("==========================", prevProps)
+  //   const { dispatch, redirectUrl } = this.props
 
-    const isLoggingOut = prevProps.auth.get('signedIn') && !this.props.auth.get('signedIn')
-    const isLoggingIn = !prevProps.auth.get('signedIn') && this.props.auth.get('signedIn')
+  //   const isLoggingOut = prevProps.auth.get('signedIn') && !this.props.auth.get('signedIn')
+  //   const isLoggingIn = !prevProps.auth.get('signedIn') && this.props.auth.get('signedIn')
 
-    if (isLoggingIn) {
-      console.log("=========browserHistory=====", browserHistory)
-      browserHistory.push('/search-job')
-    } else if (isLoggingOut) {
-      browserHistory.push('/login')
-    }
-  }
+  //   if (isLoggingIn) {
+  //     console.log("=========browserHistory=====", browserHistory)
+  //     browserHistory.push('/search-job')
+  //   } else if (isLoggingOut) {
+  //     browserHistory.push('/login')
+  //   }
+  // }
 
   // componentDidUpdate (nextProps, nextState) {
   //   console.log("nextProps.auth", nextProps.auth.getIn(['signedIn']))

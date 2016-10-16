@@ -1,6 +1,8 @@
 import {ACTION_TYPES} from '../constants/ActionTypes'
 import 'whatwg-fetch';
 
+import { push } from 'react-router-redux';
+
 export function createSession({email, password}) {
   return function(dispatch){
     const url = "http://localhost:3000/session/create";
@@ -25,6 +27,7 @@ export function createSession({email, password}) {
             type: ACTION_TYPES.CREATE_SESSION,
             data: data
           })
+          dispatch(push('/search-job'));
         }else{
           dispatch({
             type: ACTION_TYPES.CREATE_SESSION_ERROR,
@@ -43,6 +46,7 @@ export function destroySession() {
     dispatch({
       type: ACTION_TYPES.LOGOUT
     })
+    dispatch(push('/'));
   }
 }
 
