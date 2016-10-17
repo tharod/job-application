@@ -72,7 +72,7 @@ module.exports = {
     }),
     //global variable plugins
     new webpack.DefinePlugin({
-      API_URL: JSON.stringify("http://localhost:3000"),
+      API_URL: JSON.stringify("https://rails-jobapplication.herokuapp.com"),
       'process.env': {
         'NODE_ENV': JSON.stringify('production')
       }
