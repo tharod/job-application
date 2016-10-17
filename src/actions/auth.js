@@ -77,7 +77,7 @@ export function createUser({email, password, country, firstName, lastName}) {
             type: ACTION_TYPES.CREATE_SESSION,
             data: data
           })
-          browserHistory.push('/search-job')
+          dispatch(push('/search-job'));
         }else{
           dispatch({
             type: ACTION_TYPES.CREATE_SESSION_ERROR,
