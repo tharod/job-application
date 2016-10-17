@@ -5,12 +5,17 @@
   "main": "index.js",
   "scripts": {
     "build-dev": "webpack --config webpack.config.js",
-    "start-dev-server": "node server.js --progress --inline --hot"
+    "clean-public": "npm run remove-public && mkdir public",
+    "remove-public": "node_modules/.bin/rimraf ./public",
+    "build": "webpack --config webpack.prod.config.js --progress --colors",
+    "start": "node proServer.js",
+    "start-dev-server": "node server.js -b 192.168.0.120 --progress --inline --hot"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "babel-cli": "^6.16.0",
+    "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-transform-class-properties": "^6.16.0",
     "babel-plugin-transform-runtime": "^6.15.0",
@@ -19,6 +24,7 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
     "babel-register": "^6.16.3",
+    "compression": "^1.6.2",
     "css-loader": "^0.25.0",
     "express": "^4.14.0",
     "jquery": "^3.1.1",
@@ -33,7 +39,7 @@
     "redux": "^3.6.0",
     "redux-bootstrap": "^1.0.0-rc.1",
     "redux-form": "^6.1.0",
-    "redux-immutable": "^3.0.8",    
+    "redux-immutable": "^3.0.8",
     "redux-logger": "^2.7.0",
     "redux-thunk": "^2.1.0",
     "resolve-url-loader": "^1.6.0",
