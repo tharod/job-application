@@ -27,6 +27,10 @@ const validate = values => {
     errors.lastName = 'Required'
   }
 
+  if (!values.country || values.country === 'Select Country') {
+    errors.country = 'Required'
+  }
+
   if (!values.termsAndServices) {
     errors.termsAndServices = 'Accept Terms of Service'
   }
@@ -59,6 +63,17 @@ export class SignUp extends React.Component {
             </label>
             {field.meta.touched &&  field.meta.error && 
               <span className="control-label row">{field.meta.error}</span>
+            }
+          </div>
+        )
+      case 'select':
+        return(
+          <div className={`form-group ${field.meta.touched && field.meta.error ? 'has-error' : ''}`}>
+            <select {...field.input} className={field.className}>
+              {field.children}
+            </select>
+            {field.meta.touched &&  field.meta.error && 
+              <span className="control-label">{field.meta.error}</span>
             }
           </div>
         )
@@ -96,14 +111,12 @@ export class SignUp extends React.Component {
 
           <div className="row">
             <div className="form-group col-xs-12">
-              <Field name="country" component="select" className='form-control'>
-                <option>Select Country</option>
-                <option value="in">India</option>
-                <option value="ch">China</option>
-                <option value="us">US</option>
+              <Field name="country" component={this.renderField} label="country" inputType='select' className='form-control' >
+                { [{value: null, text: 'Select Country'}, {value: 'India', text: 'in'}, {value: 'China', text: 'ch'}, {value: 'USA', text: 'us'}].map(option => <option value={option.value}>{option.text}</option>) }
               </Field>
             </div>
           </div>
+
 
           <div className="row">
             <div className="form-group col-xs-12">
