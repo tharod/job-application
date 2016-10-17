@@ -7,16 +7,18 @@ import reduxThunk from 'redux-thunk';
 import { browserHistory } from 'react-router'
 import { routerMiddleware, push } from 'react-router-redux'
 import Immutable from 'immutable';
+import createLogger from 'redux-logger';
 
 export default function configureStore(i_state) {
   const middleware = routerMiddleware(browserHistory)
   const initialState = Immutable.fromJS(i_state)
+  const logger = createLogger();
 
   const store = createStore(
     rootReducer,
     initialState,
     compose (
-      applyMiddleware(reduxThunk, middleware),
+      applyMiddleware(reduxThunk, middleware, logger),
       window.devToolsExtension ? window.devToolsExtension() : f => f
     )
   );

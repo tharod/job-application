@@ -5,7 +5,7 @@ import { push } from 'react-router-redux';
 
 export function createSession({email, password}) {
   return function(dispatch){
-    const url = "http://localhost:3000/session/create";
+    const url = API_URL + "/session/create";
     fetch(url, {
         method: 'POST',
         credentials: 'include',
