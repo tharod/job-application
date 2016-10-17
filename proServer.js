@@ -7,16 +7,17 @@ var webpack = require('webpack')
 // var webpackHotMiddleware = require('webpack-hot-middleware')
 var config = require('./webpack.prod.config')
 var path = require('path')
-var Express = require('express')
+var express = require('express');
 var requestHandler = require('./prodRequestHandler')
 
 // var qs = require("query-string")
 // var cookieParser = require('cookie-parser')
 
-var app = new Express()
-var port = 7770
+var app = express();
+var port = process.env.PORT || 8080;
 // const publicPath = app.static(path.join(__dirname, '../public'))
 // app.use('/public', publicPath)
+app.use(express.static(__dirname + '/public'));
 
 var compiler = webpack(config)
 // app.use(webpackDevMiddleware(compiler, {
@@ -32,10 +33,10 @@ delete process.env.BROWSER;
 
 app.use(requestHandler);
 
-// app.listen(port, function (error) {
-//   if (error) {
-//     console.error(error)
-//   } else {
-//     console.info('==> Listening on port %s. Open up http://localhost:%s/ in your browser.', port, port)
-//   }
-// })
+app.listen(port, function (error) {
+  if (error) {
+    console.error(error)
+  } else {
+    console.info('==> Listening on port %s. Open up http://localhost:%s/ in your browser.', port, port)
+  }
+})

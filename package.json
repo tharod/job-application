@@ -12,6 +12,11 @@
     "build": "webpack --verbose --progress --colors --display-error-details --config webpack.prod.config.js",
     "postinstall": "npm run build"
   },
+
+  "engines": {
+    "node": "6.0.0"
+  },
+
   "author": "",
   "license": "ISC",
   "dependencies": {
