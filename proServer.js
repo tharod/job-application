@@ -8,15 +8,15 @@ var webpack = require('webpack')
 var config = require('./webpack.prod.config')
 var path = require('path')
 var Express = require('express')
-var requestHandler = require('./proRequestHandler')
+var requestHandler = require('./prodRequestHandler')
 
 // var qs = require("query-string")
 // var cookieParser = require('cookie-parser')
 
 var app = new Express()
 var port = 7770
-const publicPath = express.static(path.join(__dirname, '../public'))
-app.use('/public', publicPath)
+// const publicPath = app.static(path.join(__dirname, '../public'))
+// app.use('/public', publicPath)
 
 var compiler = webpack(config)
 // app.use(webpackDevMiddleware(compiler, {
