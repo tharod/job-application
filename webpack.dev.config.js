@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const devServer = require('webpack-dev-server');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+
 
 const PATHS = {
   build: path.join(__dirname, 'build'),
@@ -27,6 +29,7 @@ module.exports = {
       exclude: /node_modules/,
       loader: 'babel',
       query: {
+        'plugins': ['lodash'],
         presets: [ 'latest', 'react', 'react-hmre' ]
       }
     },
@@ -73,6 +76,7 @@ module.exports = {
     stats: { colors: true },
   },
   plugins: [
+    new LodashModuleReplacementPlugin,
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     //global variable plugins

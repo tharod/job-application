@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 // const PATHS = {
 //   build: path.join(__dirname, 'build'),
@@ -24,6 +25,7 @@ module.exports = {
       exclude: /node_modules/,
       loader: 'babel',
       query: {
+        'plugins': ['lodash'],
         presets: [ 'latest', 'react' ]
       }
     },
@@ -63,6 +65,7 @@ module.exports = {
   },
   
   plugins: [
+    new LodashModuleReplacementPlugin,
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       minimize: true,

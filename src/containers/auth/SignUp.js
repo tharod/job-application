@@ -6,6 +6,8 @@ import Immutable from 'immutable';
 
 import { Field, reduxForm } from 'redux-form/immutable'
 
+import _ from 'lodash';
+
 const validate = values => {
   // IMPORTANT: values is an Immutable.Map here!
   const errors = {}
@@ -13,18 +15,27 @@ const validate = values => {
     errors.email = 'Required'
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = 'Invalid email address'
+  } else if(values.email.length > 50){
+    errors.email = 'Max 50 char'
   }
 
   if (!values.password) {
     errors.password = 'Required'
+  } else if(values.password.length > 50){
+    errors.password = 'Max 50 char'
   }
+
 
   if (!values.firstName) {
     errors.firstName = 'Required'
+  } else if(values.firstName.length > 50){
+    errors.firstName = 'Max 50 char'
   }
 
   if (!values.lastName) {
     errors.lastName = 'Required'
+  } else if(values.lastName.length > 50){
+    errors.lastName = 'Max 50 char'
   }
 
   if (!values.country || values.country === 'Select Country') {
@@ -34,7 +45,6 @@ const validate = values => {
   if (!values.termsAndServices) {
     errors.termsAndServices = 'Accept Terms of Service'
   }
-
 
   return errors
 }
@@ -52,7 +62,12 @@ export class SignUp extends React.Component {
   }
 
   renderField(field) {
+    var options = {}
     var inputType = field.inputType ? field.inputType : 'text'
+    var maxLengthOpt = (field.maxLength ? {maxLength: field.maxLength} : {})
+    options = _.merge({}, options, maxLengthOpt)
+
+    console.log("options========", {options})
     switch (inputType){
       case 'checkbox':
         return(
@@ -80,7 +95,7 @@ export class SignUp extends React.Component {
       default: 
         return(
           <div className={`form-group ${field.meta.touched && field.meta.error ? 'has-error' : ''}`}>
-            <input {...field.input} type={inputType} className={`form-control ${field.className}`} placeholder={field.placeholder} />
+            <input {...field.input} type={inputType} className={`form-control ${field.className}`} placeholder={field.placeholder} {...options} />
             {field.meta.touched &&  field.meta.error && 
              <span className="control-label">{field.meta.error}</span>}
           </div>
@@ -101,11 +116,11 @@ export class SignUp extends React.Component {
         <form onSubmit={handleSubmit(this.handleSubmit)} >
           <div className="row">
             <div className="form-group col-xs-6">
-              <Field name="firstName" className='' component={this.renderField} inputType='' placeholder='First Name'/>
+              <Field name="firstName" className='' component={this.renderField} inputType='' placeholder='First Name' maxLength='50'/>
             </div>
 
             <div className="form-group col-xs-6">
-              <Field name="lastName" className='' component={this.renderField} inputType='' placeholder='Last Name'/>
+              <Field name="lastName" className='' component={this.renderField} inputType='' placeholder='Last Name' maxLength='50'/>
             </div>
           </div>
 
@@ -120,13 +135,13 @@ export class SignUp extends React.Component {
 
           <div className="row">
             <div className="form-group col-xs-12">
-              <Field name="email" className='' component={this.renderField} inputType='' placeholder="Email"/>
+              <Field name="email" className='' component={this.renderField} inputType='' placeholder="Email" maxLength='50'/>
             </div>
           </div>
 
           <div className="row">
             <div className="form-group col-xs-12">
-              <Field name="password" className='' component={this.renderField} inputType='password' ref='password' placeholder="Password"/>
+              <Field name="password" className='' component={this.renderField} inputType='password' ref='password' placeholder="Password" maxLength='50'/>
             </div>
           </div>
 
