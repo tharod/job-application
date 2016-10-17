@@ -10,15 +10,17 @@ var path = require('path')
 var express = require('express');
 var requestHandler = require('./prodRequestHandler')
 
+console.log("========requestHandler============", requestHandler)
 // var qs = require("query-string")
 // var cookieParser = require('cookie-parser')
 
-var app = express();
+var app = new express();
 var port = process.env.PORT || 8080;
-// const publicPath = app.static(path.join(__dirname, '../public'))
-// app.use('/public', publicPath)
-app.use(express.static(__dirname + '/public'));
-
+const publicPath = express.static(path.join(__dirname, './public'))
+console.log("======path.join(__dirname, '../public')", path.join(__dirname, './public'))
+app.use('/public', publicPath)
+// app.use(express.static(__dirname + './public'));
+// console.log("=======express.static(__dirname + './public')=======", express.static(__dirname + './public'))
 var compiler = webpack(config)
 // app.use(webpackDevMiddleware(compiler, {
 //   publicPath: config.output.publicPath,
