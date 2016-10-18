@@ -6,7 +6,7 @@ import Immutable from 'immutable';
 
 import { Field, reduxForm } from 'redux-form/immutable'
 
-import { browserHistory } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 
 const validate = values => {
   // IMPORTANT: values is an Immutable.Map here!
@@ -81,6 +81,11 @@ export class SignIn extends React.Component {
             <label htmlFor="password">Password</label>
             <Field name="password" className='' component={this.renderField} inputType='password' ref='password' placeholder="Password"/>
           </div>
+
+          <div className="form-group pull-right">
+            <Link to="/forgotPassword">Forgot your password?</Link>
+          </div>
+
           <div className="form-group">
             <button type="submit" className="btn btn-default" disabled={submitting}>Login</button>
           </div>
