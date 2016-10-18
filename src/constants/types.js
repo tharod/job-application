@@ -1,0 +1,18 @@
+export const LOGIN_USER = 'LOGIN_USER';
+export const LOGIN_SUCCESS_USER = 'LOGIN_SUCCESS_USER';
+export const LOGIN_ERROR_USER = 'LOGIN_ERROR_USER';
+
+export const CREATE_USER = 'CREATE_USER';
+export const CREATE_SUCCESS_USER = 'CREATE_SUCCESS_USER';
+export const CREATE_ERROR_USER = 'CREATE_ERROR_USER';
+
+export const LOGOUT_USER = 'LOGOUT_USER';
+export const LOGOUT_SUCCESS_USER = 'LOGOUT_SUCCESS_USER';
+export const LOGOUT_ERROR_USER = 'LOGOUT_ERROR_USER';
+;
+export const SET_ERROR = 'SET_ERROR';
+export const SET_NOTICE = 'SET_NOTICE';
+export const SET_ALERT = 'SET_ALERT';
+
+
+

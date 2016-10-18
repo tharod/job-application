@@ -1,4 +1,4 @@
-import {ACTION_TYPES} from '../constants/ActionTypes'
+import * as types from '../constants/types';
 import Immutable from 'immutable';
 
 const initialState = Immutable.fromJS({
@@ -7,7 +7,7 @@ const initialState = Immutable.fromJS({
 
 export default function flashNotification(state = initialState, action) {
   switch(action.type) {
-    case ACTION_TYPES.SET_ERROR:
+    case types.SET_ERROR:
       return state
     default:
       return state;
