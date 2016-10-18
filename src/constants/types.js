@@ -9,10 +9,12 @@ export const CREATE_ERROR_USER = 'CREATE_ERROR_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const LOGOUT_SUCCESS_USER = 'LOGOUT_SUCCESS_USER';
 export const LOGOUT_ERROR_USER = 'LOGOUT_ERROR_USER';
-;
+
 export const SET_ERROR = 'SET_ERROR';
 export const SET_NOTICE = 'SET_NOTICE';
 export const SET_ALERT = 'SET_ALERT';
+
+export const RESET_AUTH_ERROR = 'RESET_AUTH_ERROR'
 
 
 

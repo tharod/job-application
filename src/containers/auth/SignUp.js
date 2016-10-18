@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as AuthActions from '../../actions/auth';
 import { bindActionCreators } from 'redux';
 import Immutable from 'immutable';
+import { RESET_AUTH_ERROR } from '../../constants/types';
 
 import { Field, reduxForm } from 'redux-form/immutable'
 
@@ -23,6 +24,8 @@ const validate = values => {
     errors.password = 'Required'
   } else if(values.password.length > 50){
     errors.password = 'Max 50 char'
+  } else if(values.password.length < 6){
+    errors.password = 'Minimux 6 char'
   }
 
 
@@ -55,6 +58,11 @@ export class SignUp extends React.Component {
     super(props)
     // Pro tip: The best place to bind your member functions is in the component constructor
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  componentWillMount(){
+    //resetting the error in auth
+    this.props.dispatch({ type: RESET_AUTH_ERROR })
   }
 
   componentDidUpdate (nextProps, nextState) {

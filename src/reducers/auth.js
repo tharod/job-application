@@ -28,6 +28,9 @@ export default function auth(state = initialState, action) {
     case types.CREATE_ERROR_USER:
       return state.merge({errors: data.message, submitting: false })
 
+    case types.RESET_AUTH_ERROR:
+      return state.merge({errors: null })      
+
     default:
       return state;
   }
