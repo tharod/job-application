@@ -54,7 +54,7 @@ export class SignIn extends React.Component {
   renderField(field) {
     var inputType = field.inputType ? field.inputType : 'text' 
     return(
-      <div className={`form-group ${field.meta.touched && field.meta.error ? 'has-error' : 'test-errro'}`}>
+      <div className={`form-group ${field.meta.touched && field.meta.error ? 'has-error' : ''}`}>
         <input {...field.input} type={inputType} className={`form-control ${field.className}`}/>
         {field.meta.touched &&  field.meta.error && 
          <span className="control-label">{field.meta.error}</span>}
