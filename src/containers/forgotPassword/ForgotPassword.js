@@ -40,7 +40,8 @@ export class ForgotPassword extends React.Component {
   }
 
   render() {
-    const { handleSubmit, submitting, forgotPassword } = this.props;
+    const { handleSubmit, isSubmitting, forgotPassword } = this.props;
+    console.log("====================submitting===================props", isSubmitting)
     return (
       <div className="jumbotron center-block">
         <h3>Forgot your password?</h3>
@@ -50,7 +51,7 @@ export class ForgotPassword extends React.Component {
           </div>
 
           <div className="form-group">
-            <button type="submit" className="btn btn-default" disabled={submitting}>Restore</button>
+            <button type="submit" className="btn btn-default" disabled={isSubmitting}>Restore</button>
           </div>
         </form>
           <div className='error-message'>{forgotPassword.getIn(['message'])}</div>
@@ -62,7 +63,8 @@ export class ForgotPassword extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    forgotPassword: state.getIn(['forgotPassword'])
+    forgotPassword: state.getIn(['forgotPassword']),
+    isSubmitting: state.getIn(['forgotPassword', 'submitting'])
   };
 }
 
@@ -83,3 +85,9 @@ ForgotPassword = reduxForm({
 // };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ForgotPassword);
+
+
+// static propTypes = {
+//     fields: PropTypes.object.isRequired,
+//     handleSubmit: PropTypes.func.isRequired
+//   }

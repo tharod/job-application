@@ -67,7 +67,7 @@ export class SignIn extends React.Component {
   }
 
   render() {
-    const { handleSubmit, submitting, auth } = this.props;
+    const { handleSubmit, isSubmitting, auth } = this.props;
     return (
       <div className="jumbotron center-block">
         <h3>Login</h3>
@@ -87,7 +87,7 @@ export class SignIn extends React.Component {
           </div>
 
           <div className="form-group">
-            <button type="submit" className="btn btn-default" disabled={submitting}>Login</button>
+            <button type="submit" className="btn btn-default" disabled={isSubmitting}>Login</button>
           </div>
         </form>
           <div className='error-message'>{auth.getIn(['errors'])}</div>
@@ -99,7 +99,8 @@ export class SignIn extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    auth: state.getIn(['auth'])
+    auth: state.getIn(['auth']),
+    isSubmitting: state.getIn(['auth', 'submitting'])
   };
 }
 
@@ -120,3 +121,8 @@ SignIn.propTypes = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+
+// this.context.router.push('/');
+// static contextTypes = {
+//     router: PropTypes.object
+//   };

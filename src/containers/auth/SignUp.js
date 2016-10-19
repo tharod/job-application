@@ -117,7 +117,7 @@ export class SignUp extends React.Component {
   }
 
   render() {
-    const { handleSubmit, submitting, auth } = this.props;
+    const { handleSubmit, isSubmitting, auth } = this.props;
     return (
       <div className="jumbotron center-block">
         <h3><center>Get paid now</center></h3>
@@ -167,7 +167,7 @@ export class SignUp extends React.Component {
           
           <div className="row">
             <div className="form-group col-xs-12">
-              <button type="submit" className="btn btn-default" disabled={submitting}>Get Paid Now</button>
+              <button type="submit" className="btn btn-default" disabled={isSubmitting}>Get Paid Now</button>
             </div>
           </div>
 
@@ -183,7 +183,8 @@ export class SignUp extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    auth: state.getIn(['auth'])
+    auth: state.getIn(['auth']),
+    isSubmitting: state.getIn(['auth', 'submitting'])
   };
 }
 

@@ -52,7 +52,7 @@ export class ChangePassword extends React.Component {
   }
 
   render() {
-    const { handleSubmit, submitting, changePassword } = this.props;
+    const { handleSubmit, isSubmitting, changePassword } = this.props;
     return (
       <div className="jumbotron center-block">
         <h3>Change Password</h3>
@@ -66,7 +66,7 @@ export class ChangePassword extends React.Component {
           </div>
 
           <div className="form-group">
-            <button type="submit" className="btn btn-default" disabled={submitting}>Confirm</button>
+            <button type="submit" className="btn btn-default" disabled={isSubmitting}>Confirm</button>
           </div>
         </form>
           <div className='error-message'>{changePassword.getIn(['message'])}</div>
@@ -79,7 +79,8 @@ export class ChangePassword extends React.Component {
 function mapStateToProps(state, ownProps) {
   return {
     changePassword: state.getIn(['forgotPassword']),
-    token: ownProps.location.query.token
+    token: ownProps.location.query.token,
+    isSubmitting: state.getIn(['forgotPassword', 'submitting'])
   };
 }
 

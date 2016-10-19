@@ -46,14 +46,19 @@ export function changePassword({password, passwordConfirmation}, token) {
     
     dispatch({ type: types.CHANGE_PASSWORD })
 
-    const url = API_URL + "/users/change_password?token=" + token;
+    const url = API_URL + "/users/change_password";
     fetch(url, {
-        method: 'GET',
+        method: 'POST',
         credentials: 'include',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({
+          password: password,
+          passwordConfirmation: passwordConfirmation,
+          token: token
+        })
       })
       .then(function(response){
         return(response.json());
