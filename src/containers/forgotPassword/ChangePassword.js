@@ -7,6 +7,28 @@ import { Field, reduxForm } from 'redux-form/immutable'
 
 import { browserHistory } from 'react-router';
 
+const validate = values => {
+  // IMPORTANT: values is an Immutable.Map here!
+  const errors = {}
+  if (!values.password) {
+    errors.password = 'Required'
+  } else if(values.password.length > 50){
+    errors.password = 'Max 50 char'
+  } else if(values.password.length < 6){
+    errors.password = 'Minimux 6 char'
+  }
+
+  if (!values.passwordConfirmation) {
+    errors.passwordConfirmation = 'Required'
+  }
+
+  if ((values.password && values.passwordConfirmation) && values.passwordConfirmation != values.password){
+    errors.passwordConfirmation = "New Password and Re-Enter New Password is not same"
+  }
+
+  return errors
+}
+
 export class ChangePassword extends React.Component {
 
   constructor(props) {
@@ -69,7 +91,8 @@ function mapDispatchToProps(dispatch) {
 
 ChangePassword = reduxForm({
   form: 'ChangePasswordForm',
-  asyncValidating: true
+  asyncValidating: true,
+  validate
 })(ChangePassword);
 
 // ForgotPassword.propTypes = {

@@ -17,6 +17,7 @@ const routes = (
       <Route path="/signup" component={SignUp}/>
       <Route path="/forgotPassword" component={ForgotPassword}/>
       <Route path="/changePassword" component={ChangePassword}/>
+      <Route path="/search-job" component={SearchJob}/>
     </Route>
   </Router>
 )
