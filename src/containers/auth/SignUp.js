@@ -135,7 +135,7 @@ export class SignUp extends React.Component {
           <div className="row">
             <div className="form-group col-xs-12">
               <Field name="country" component={this.renderField} label="country" inputType='select' className='form-control' >
-                { [{value: null, text: 'Select Country'}, {value: 'India', text: 'in'}, {value: 'China', text: 'ch'}, {value: 'USA', text: 'us'}].map(option => <option value={option.value}>{option.text}</option>) }
+                { [{value: null, text: 'Select Country'}, {value: 'China', text: 'China'}, {value: 'India', text: 'India'}, {value: 'USA', text: 'USA'}].map(option => <option value={option.value}>{option.text}</option>) }
               </Field>
             </div>
           </div>
