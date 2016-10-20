@@ -5,20 +5,24 @@ import { bindActionCreators } from 'redux';
 import Immutable from 'immutable';
 
 import { Field, reduxForm } from 'redux-form/immutable'
-
 import { browserHistory, Link } from 'react-router';
+import _ from 'lodash';
 
 const validate = values => {
   // IMPORTANT: values is an Immutable.Map here!
   const errors = {}
   if (!values.email) {
     errors.email = 'Required'
+  } else if(values.email.length > 50){
+    errors.email = 'Max 50 char'
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = 'Invalid email address'
   }
 
   if (!values.password) {
     errors.password = 'Required'
+  }else if(values.password.length > 50){
+    errors.password = 'Max 50 char'
   }
   
   return errors
@@ -52,10 +56,14 @@ export class SignIn extends React.Component {
   // }
 
   renderField(field) {
+    var options = {}
     var inputType = field.inputType ? field.inputType : 'text' 
+    var maxLengthOpt = (field.maxLength ? {maxLength: field.maxLength} : {})
+    options = _.merge({}, options, maxLengthOpt)
+
     return(
       <div className={`form-group ${field.meta.touched && field.meta.error ? 'has-error' : ''}`}>
-        <input {...field.input} type={inputType} className={`form-control ${field.className}`}/>
+        <input {...field.input} type={inputType} className={`form-control ${field.className}`} placeholder={field.placeholder} {...options}/>
         {field.meta.touched &&  field.meta.error && 
          <span className="control-label">{field.meta.error}</span>}
       </div>
@@ -73,13 +81,11 @@ export class SignIn extends React.Component {
         <h3>Login</h3>
         <form onSubmit={handleSubmit(this.handleSubmit)} >
           <div className="form-group">
-            <label>Email</label>
-            <Field name="email" className='' component={this.renderField} inputType=''/>
+            <Field name="email" className='' component={this.renderField} inputType='' placeholder="Email" maxLength='50'/>
           </div>
 
           <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <Field name="password" className='' component={this.renderField} inputType='password' ref='password' placeholder="Password"/>
+            <Field name="password" className='' component={this.renderField} inputType='password' ref='password' placeholder="Password" placeholder="Password" maxLength='50'/>
           </div>
 
           <div className="form-group pull-right">

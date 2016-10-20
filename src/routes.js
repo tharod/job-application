@@ -7,7 +7,7 @@ import SearchJob from './components/SearchJob';
 import SignIn from './containers/auth/SignIn';
 import SignUp from './containers/auth/SignUp';
 import ForgotPassword from './containers/forgotPassword/ForgotPassword';
-import ChangePassword from './containers/forgotPassword/ChangePassword';
+import ChangePassword from './containers/auth/ChangePassword';
 
 const routes = (
   <Router history={browserHistory}>

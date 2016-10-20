@@ -15,13 +15,6 @@ export default function auth(state = initialState, action) {
       return state.merge({ submitting: false })
     case types.FORGOT_PASSWORD_ERROR:
       return state.merge({ submitting: false, message: data.message })
-
-    case types.CHANGE_PASSWORD:
-      return state.merge({ submitting: true })
-    case types.CHANGE_PASSWORD_SUCCESS:
-      return state.merge({ submitting: false })
-    case types.CHANGE_PASSWORD_ERROR:
-      return state.merge({ submitting: false, message: data.message })
     default:
       return state;
   }

@@ -92,3 +92,44 @@ export function createUser({email, password, country, firstName, lastName}) {
       })
   }
 }
+
+export function changePassword({password, passwordConfirmation}, token) {
+  return function(dispatch){
+    dispatch({ type: types.CHANGE_PASSWORD })
+
+    const url = API_URL + "/users/change_password";
+    fetch(url, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          password: password,
+          password_confirmation: passwordConfirmation,
+          token: token
+        })
+      })
+      .then(function(response){
+        return(response.json());
+      })
+      .then(function(data){
+        console.log("===================data forgotPassword==========", data)
+        if (data.result==0){
+          dispatch({
+            type: types.CHANGE_PASSWORD_SUCCESS
+          })
+          dispatch(push('/search-job'));
+        }else{
+          dispatch({
+            type: types.CHANGE_PASSWORD_ERROR,
+            data: data
+          })
+        }
+      })
+      .catch(function(error){
+        console.log("Opps...", "Error while create changePassword:: " + error);
+      })
+  }
+}

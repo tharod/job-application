@@ -10,6 +10,8 @@ const validate = values => {
   const errors = {}
   if (!values.email) {
     errors.email = 'Required'
+  } else if(values.email.length > 50){
+    errors.email = 'Max 50 char'
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
     errors.email = 'Invalid email address'
   }
@@ -28,7 +30,7 @@ export class ForgotPassword extends React.Component {
   renderField(field) {
     return(
       <div className={`form-group ${field.meta.touched && field.meta.error ? 'has-error' : ''}`}>
-        <input {...field.input} type='text' className={`form-control ${field.className}`} placeholder={field.placeholder} />
+        <input {...field.input} type='text' className={`form-control ${field.className}`} placeholder={field.placeholder} maxLength='50' />
         {field.meta.touched &&  field.meta.error && 
          <span className="control-label">{field.meta.error}</span>}
       </div>

@@ -25,7 +25,7 @@ const validate = values => {
   } else if(values.password.length > 50){
     errors.password = 'Max 50 char'
   } else if(values.password.length < 6){
-    errors.password = 'Minimux 6 char'
+    errors.password = 'Minimum 6 char'
   }
 
 
@@ -75,7 +75,6 @@ export class SignUp extends React.Component {
     var maxLengthOpt = (field.maxLength ? {maxLength: field.maxLength} : {})
     options = _.merge({}, options, maxLengthOpt)
 
-    console.log("options========", {options})
     switch (inputType){
       case 'checkbox':
         return(

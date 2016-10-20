@@ -1,17 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Button } from 'react-bootstrap';
 import Immutable from 'immutable';
 
 import * as AuthActions from '../actions/auth';
 import { bindActionCreators } from 'redux';
+import $ from 'jquery';
+import { LinkContainer } from 'react-router-bootstrap';
 
 class Header extends React.Component {
   constructor(props) {
     super(props)
     // Pro tip: The best place to bind your member functions is in the component constructor
     this.handleClick = this.handleClick.bind(this)
+    this.onSelect = this.onSelect.bind(this);
   }
   
   handleClick(event){
@@ -19,25 +22,36 @@ class Header extends React.Component {
     event.preventDefault()
   }
 
+  onSelect(e){
+//    alert("test1111")
+    $('.navbar-toggle').click()
+  }
+
   renderLinks() {
     if (this.props.auth.getIn(['signedIn'])) {
       return (
-        <Nav>
-          <li key={1}>
-            <Link className="nav-link" to="#" onClick={(e)=> this.handleClick(e)}>Logout</Link>
-          </li>
+        <Nav onSelect={this.onSelect}>
+          <LinkContainer to={{ pathname: '/changePassword' }} className="nav-link">
+            <NavItem>Change Password</NavItem>
+          </LinkContainer>
+
+          <LinkContainer to={{ pathname: '#' }} className="nav-link" onClick={(e)=> this.handleClick(e)}>
+            <NavItem>Logout</NavItem>
+          </LinkContainer>
         </Nav>
       )
     }
     else{
       return(
-        <Nav>
-          <li key={2}>
-            <Link className="nav-link" to="/login">Login</Link>
-          </li>
-          <li key={3}>
-            <Link className="nav-link" to="/signup">SignUp</Link>
-          </li>
+        <Nav onSelect={this.onSelect}>
+          <LinkContainer to={{ pathname: '/login' }} className="nav-link">
+            <NavItem>Login</NavItem>
+          </LinkContainer>
+
+          <LinkContainer to={{ pathname: '/signup' }} className="nav-link">
+            <NavItem>SignUp</NavItem>
+          </LinkContainer>
+
         </Nav>
       )
     }
@@ -53,7 +67,7 @@ class Header extends React.Component {
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
-          { this.renderLinks() }
+          {this.renderLinks()}
         </Navbar.Collapse>
       </Navbar>
     );

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import * as ForgotPwdActions from '../../actions/forgotPassword';
+import * as ChangePwdActions from '../../actions/auth';
 import { bindActionCreators } from 'redux';
 import Immutable from 'immutable';
 import { Field, reduxForm } from 'redux-form/immutable'
@@ -40,7 +40,7 @@ export class ChangePassword extends React.Component {
   renderField(field) {
     return(
       <div className={`form-group ${field.meta.touched && field.meta.error ? 'has-error' : ''}`}>
-        <input {...field.input} type='password' className={`form-control ${field.className}`} placeholder={field.placeholder} />
+        <input {...field.input} type='password' className={`form-control ${field.className}`} placeholder={field.placeholder} maxLength='50' />
         {field.meta.touched &&  field.meta.error && 
          <span className="control-label">{field.meta.error}</span>}
       </div>
@@ -69,7 +69,7 @@ export class ChangePassword extends React.Component {
             <button type="submit" className="btn btn-default" disabled={isSubmitting}>Confirm</button>
           </div>
         </form>
-          <div className='error-message'>{changePassword.getIn(['message'])}</div>
+          <div className='error-message'>{changePassword.getIn(['errors'])}</div>
       </div>
     );
   }
@@ -78,15 +78,15 @@ export class ChangePassword extends React.Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    changePassword: state.getIn(['forgotPassword']),
-    token: ownProps.location.query.token,
-    isSubmitting: state.getIn(['forgotPassword', 'submitting'])
+    changePassword: state.getIn(['auth']),
+    isSubmitting: state.getIn(['auth', 'submitting']),
+    token: state.getIn(['auth', 'token'])
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(ForgotPwdActions, dispatch)
+    actions: bindActionCreators(ChangePwdActions, dispatch)
   }
 }
 
