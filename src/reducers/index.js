@@ -1,17 +1,19 @@
 import { combineReducers } from 'redux-immutable';
-import PageLoaderReducer from './pageLoader';
-import Auth from './auth';
-import ForgotPassword from './forgotPassword';
+import pageLoaderReducer from './pageLoader';
+import auth from './auth';
+import forgotPassword from './forgotPassword';
+import customRehydrate from './customRehydrate';
 import { reducer as formReducer } from 'redux-form';
 
 import { routerReducer } from 'react-router-redux';
 
 const rootReducer = combineReducers({
   routing: routerReducer,
-  auth: Auth,
-  forgotPassword: ForgotPassword,
-  pageLoader: PageLoaderReducer,
-  form: formReducer
+  auth: auth,
+  forgotPassword: forgotPassword,
+  pageLoader: pageLoaderReducer,
+  form: formReducer,
+  customRehydrate: customRehydrate
 });
 
 export default rootReducer;
