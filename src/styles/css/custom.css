@@ -129,4 +129,11 @@ body{
 }
 /*End Spinner Loader*/
 
+.list-inline li{
+  height: 30px;
+}
 
+.activeTab{
+  color: red;
+  border-bottom: 1px solid red;
+}

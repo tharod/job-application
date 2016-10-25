@@ -9,6 +9,8 @@ import { bindActionCreators } from 'redux';
 import $ from 'jquery';
 import { LinkContainer } from 'react-router-bootstrap';
 
+import * as routePath from '../constants/routePath'
+
 class Header extends React.Component {
   constructor(props) {
     super(props)
@@ -33,6 +35,10 @@ class Header extends React.Component {
         <Nav onSelect={this.onSelect}>
           <LinkContainer to={{ pathname: '/changePassword' }} className="nav-link">
             <NavItem>Change Password</NavItem>
+          </LinkContainer>
+
+          <LinkContainer to={{ pathname: routePath.POST_JOB }} className="nav-link">
+            <NavItem>Post Job</NavItem>
           </LinkContainer>
 
           <LinkContainer to={{ pathname: '#' }} className="nav-link" onClick={(e)=> this.handleClick(e)}>

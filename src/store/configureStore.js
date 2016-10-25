@@ -11,12 +11,16 @@ import createLogger from 'redux-logger';
 
 import { persistStore, autoRehydrate } from 'redux-persist-immutable'
 
-// import * as localForage from "localforage/dist/localforage.js";
+// import localForage from 'localForage'
+import localForage from "localforage";
 
 import createExpirationTransform from 'redux-persist-transform-expire';
 import createCompressor from 'redux-persist-transform-compress'
+import createActionBuffer from 'redux-action-buffer'
+import {REHYDRATE} from 'redux-persist/constants'
 
 import { REHYDRATED_DONE } from '../constants/types';
+
 
 export default function configureStore(i_state={}) {
   const middleware = routerMiddleware(browserHistory)
@@ -30,7 +34,7 @@ export default function configureStore(i_state={}) {
 
 
 const store = compose(
-                applyMiddleware(reduxThunk, middleware),
+                applyMiddleware(reduxThunk, middleware, createActionBuffer(REHYDRATE)),
                 autoRehydrate(), window.devToolsExtension ? window.devToolsExtension() : f => f
               )(createStore)(rootReducer, initialState)
 
@@ -45,7 +49,7 @@ const store = compose(
   //   )
   // );
 
-  persistStore(store, {transforms: [expireTransform, compressor], blacklist: ['customRehydrate']}, () => {
+  persistStore(store, {transforms: [expireTransform, compressor], blacklist: ['customRehydrate', 'tabs'], storage: localForage }, () => {
     store.dispatch({
       type: REHYDRATED_DONE
     })

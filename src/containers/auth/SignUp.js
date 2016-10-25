@@ -123,18 +123,18 @@ export class SignUp extends React.Component {
         <form onSubmit={handleSubmit(this.handleSubmit)} >
           <div className="row">
             <div className="form-group col-xs-6">
-              <Field name="firstName" className='' component={this.renderField} inputType='' placeholder='First Name' maxLength='50'/>
+              <Field name="firstName" className='' component={this.renderField} inputType='' placeholder='First Name' maxLength='50' key='firstName'/>
             </div>
 
             <div className="form-group col-xs-6">
-              <Field name="lastName" className='' component={this.renderField} inputType='' placeholder='Last Name' maxLength='50'/>
+              <Field name="lastName" className='' component={this.renderField} inputType='' placeholder='Last Name' maxLength='50' key='lastName'/>
             </div>
           </div>
 
           <div className="row">
             <div className="form-group col-xs-12">
-              <Field name="country" component={this.renderField} label="country" inputType='select' className='form-control' >
-                { [{value: null, text: 'Select Country'}, {value: 'China', text: 'China'}, {value: 'India', text: 'India'}, {value: 'USA', text: 'USA'}].map(option => <option value={option.value}>{option.text}</option>) }
+              <Field name="country" component={this.renderField} label="country" key='country' inputType='select' className='form-control' >
+                { [{value: null, text: 'Select Country'}, {value: 'China', text: 'China'}, {value: 'India', text: 'India'}, {value: 'USA', text: 'USA'}].map(option => <option key={option.value} value={option.value}>{option.text}</option>) }
               </Field>
             </div>
           </div>
@@ -142,25 +142,25 @@ export class SignUp extends React.Component {
 
           <div className="row">
             <div className="form-group col-xs-12">
-              <Field name="email" className='' component={this.renderField} inputType='' placeholder="Email" maxLength='50'/>
+              <Field name="email" className='' component={this.renderField} inputType='' placeholder="Email" maxLength='50' key='email'/>
             </div>
           </div>
 
           <div className="row">
             <div className="form-group col-xs-12">
-              <Field name="password" className='' component={this.renderField} inputType='password' ref='password' placeholder="Password" maxLength='50'/>
+              <Field name="password" className='' component={this.renderField} inputType='password' ref='password' placeholder="Password" maxLength='50' key='password'/>
             </div>
           </div>
 
           <div className='row'>
             <div className='checkbox col-xs-12'>
-              <Field name="marketingMaterial" id="marketingMaterial" component={this.renderField} inputType="checkbox" label='Accept marketing materials' />
+              <Field name="marketingMaterial" id="marketingMaterial" component={this.renderField} inputType="checkbox" label='Accept marketing materials' key='marketing' />
             </div>
           </div>
 
           <div className='row'>
             <div className='checkbox col-xs-12'>
-              <Field name="termsAndServices" id="termsAndServices" component={this.renderField} inputType="checkbox" label='Accept Terms of Service, including the User Agreement and Privacy Policy'/>
+              <Field name="termsAndServices" id="termsAndServices" component={this.renderField} inputType="checkbox" label='Accept Terms of Service, including the User Agreement and Privacy Policy' key='t&c'/>
             </div>
           </div>
           
