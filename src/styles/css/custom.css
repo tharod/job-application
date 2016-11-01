@@ -1,5 +1,6 @@
 body{
   background-color: #f9f9f9;
+  font-size: 12px;
 }
 
 .error-message{
@@ -136,4 +137,38 @@ body{
 .activeTab{
   color: red;
   border-bottom: 1px solid red;
+}
+
+.tablist{
+  overflow: hidden;
+}
+
+.tablist-container{
+  margin-left: 0%;
+}
+
+.activeChk{
+  background-color: #93ccea;
+}
+
+.chkBox{
+  text-align: center;
+  height: 42px;
+  word-wrap: break-word;
+  border: 1px solid black;
+}
+
+.no-padding{
+  padding: 0;
+}
+
+.margin-top-job{
+  margin-top: 15px;
+}
+
+.full-fill{
+  display: block;
+  min-height: 100%; /* for the latest browsers which support min-height */
+  height: auto !important; /* for newer IE versions */
+  height: 100%; /* the only height-related attribute that IE6 does not ignore  */
 }

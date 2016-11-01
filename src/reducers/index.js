@@ -3,7 +3,6 @@ import pageLoaderReducer from './pageLoader';
 import auth from './auth';
 import forgotPassword from './forgotPassword';
 import customRehydrate from './customRehydrate';
-import tabs from './tabs';
 import pendingJobs from './pendingJobs';
 import { reducer as formReducer } from 'redux-form';
 
@@ -17,7 +16,6 @@ const rootReducer = combineReducers({
   pageLoader: pageLoaderReducer,
   form: formReducer,
   customRehydrate: customRehydrate,
-  tabs: tabs
 });
 
 export default rootReducer;

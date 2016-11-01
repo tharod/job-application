@@ -65,10 +65,6 @@ export class SignUp extends React.Component {
     this.props.dispatch({ type: RESET_AUTH_ERROR })
   }
 
-  componentDidUpdate (nextProps, nextState) {
-    console.log("nextProps.auth", nextProps.auth.getIn(['signedIn']))
-  }
-
   renderField(field) {
     var options = {}
     var inputType = field.inputType ? field.inputType : 'text'
