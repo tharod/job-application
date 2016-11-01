@@ -19,11 +19,31 @@ const payTypes = [{name: 'By hour', isActive: true}, {name: 'Fixed price', isAct
 const validate = values => {
   // IMPORTANT: values is an Immutable.Map here!
   const errors = {}
-  if (values.categories && values.categories.length==0) {
+
+  if (!values.categories || (values.categories && (values.categories.length === 0))) {
     errors.categories = {
       _error: 'Select any options'
     };
   };
+
+  if (!values.title) {
+    errors.title = 'Required'
+  } else if(values.title.length > 20){
+    errors.title = 'Max 20 char'
+  }
+
+  if (!values.description) {
+    errors.description = 'Required'
+  } else if(values.description.length > 300){
+    errors.description = 'Max 300 char'
+  }
+
+  if (!values.budget) {
+    errors.budget = 'Required'
+  } else if(values.budget.length > 6){
+    errors.budget = 'Max 6 char'
+  }
+
   return errors
 }
 
@@ -45,6 +65,7 @@ export class NewJobPost extends React.Component {
   }
 
   handleSubmit({title, budget, categories}) {
+    debugger
     console.log("===============form post new============")
     //this.props.authActions.createUser({email, password, country, firstName, lastName})
   }
@@ -93,6 +114,7 @@ export class NewJobPost extends React.Component {
   }
 
   renderChks(field, props){
+    console.log("=================field==============", field)
     return (
       <div>
         {field.options.map((option, index) => (
@@ -116,7 +138,7 @@ export class NewJobPost extends React.Component {
             </label>
           </div>
         ))}
-        {field.meta.error && 
+        {(field.meta.touched || field.meta.dirty) && field.meta.error && 
           <span className="control-label error-message">{field.meta.error}</span>}
       </div>
     );
