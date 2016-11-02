@@ -172,3 +172,7 @@ body{
   height: auto !important; /* for newer IE versions */
   height: 100%; /* the only height-related attribute that IE6 does not ignore  */
 }
+
+.center-label{
+  padding-top: 10px;
+}

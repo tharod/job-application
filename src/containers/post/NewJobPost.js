@@ -4,7 +4,7 @@ import * as PostActions from '../../actions/post';
 import { bindActionCreators } from 'redux';
 import Immutable from 'immutable';
 
-import { Field, reduxForm, FieldArray, Fields  } from 'redux-form/immutable'
+import { Field, reduxForm, formValueSelector  } from 'redux-form/immutable'
 
 import _ from 'lodash';
 
@@ -12,9 +12,13 @@ import _ from 'lodash';
 
 const categories = [{name: 'Mobile', isActive: false}, {name: 'Ecommerce', isActive: false}, {name: 'CMS Website', isActive: false}, {name: 'Blog', isActive: false}, {name: 'Custom Website', isActive: false}, {name: 'Desktop', isActive: false}, {name: 'Theme/Template', isActive: false}, {name: 'Other', isActive: false}]
 
-const customErrors = {categories: null}
+const payTypes = [{type: 'By hour', value: 'hour_rate'}, {type: 'Fixed price', value: 'fixed_rate'}]
 
-const payTypes = [{name: 'By hour', isActive: true}, {name: 'Fixed price', isActive: false}]
+const lasting = [{type: 'Less than 1 week', value: 'less_than_1_week'}, {type: 'Less than 2 weeks', value: 'less_than_2_weeks'}, {type: 'Less than 1 month', value: 'less_than_1_month'}, {type: 'More than 1 month', value: 'more_than_1_month'}]
+
+const privacy = [{type: 'Public Job', value: 'public_job'}, {type: 'Private Job', value: 'private_job'}]
+
+const selector = formValueSelector('NewJobPostForm')
 
 const validate = values => {
   // IMPORTANT: values is an Immutable.Map here!
@@ -42,6 +46,16 @@ const validate = values => {
     errors.budget = 'Required'
   } else if(values.budget.length > 6){
     errors.budget = 'Max 6 char'
+  } else if(!(values.budget.match(/^\d*\.?\d+$/))){
+    errors.budget = 'Numeric amount only'
+  }
+
+  if (!values.payType) {
+    errors.payType = 'Required'
+  }
+
+  if (!values.lasting) {
+    errors.lasting = 'Required'
   }
 
   return errors
@@ -54,35 +68,19 @@ export class NewJobPost extends React.Component {
     super(props)
     this.renderChks = this.renderChks.bind(this)
     this.renderTextField = this.renderTextField.bind(this)
-    this.handleOnChange = this.handleOnChange.bind(this)
     this.renderTextAreaField = this.renderTextAreaField.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.budgetText = this.budgetText.bind(this)
     this.state = {
       categories: Immutable.fromJS(categories),
-      payTypes: Immutable.fromJS(payTypes),
-      customErrors: Immutable.fromJS(customErrors)
+      payTypes: Immutable.fromJS(payTypes)
     }
   }
 
-  handleSubmit({title, budget, categories}) {
+  handleSubmit({title, budget, categories, payType}) {
     debugger
     console.log("===============form post new============")
     //this.props.authActions.createUser({email, password, country, firstName, lastName})
-  }
-
-  handleOnChange(evt, field) {
-    let findindex = -1
-
-    this.state.categories.findIndex(function(element, index)
-    {
-      if(element.get('name')===field.label){ 
-        findindex = index
-        return findindex
-      }
-    })
-    this.setState({
-      categories: this.state.categories.setIn([findindex, 'isActive'], evt.target.checked)
-    })
   }
 
   renderTextField(field) {
@@ -92,7 +90,7 @@ export class NewJobPost extends React.Component {
 
     return(
       <div className={`form-group ${field.meta.touched && field.meta.error ? 'has-error' : ''}`}>
-        <input {...field.input} type='text' className={`form-control ${field.className}`} placeholder={field.placeholder} {...options} />
+        <input {...field.input} type='text' className={`form-control ${field.className ? field.className : ''}`} placeholder={field.placeholder} {...options} />
         {field.meta.touched &&  field.meta.error && 
          <span className="control-label">{field.meta.error}</span>}
       </div>
@@ -114,14 +112,13 @@ export class NewJobPost extends React.Component {
   }
 
   renderChks(field, props){
-    console.log("=================field==============", field)
     return (
       <div>
         {field.options.map((option, index) => (
           <div className={`col-xs-3 no-padding chkBox ${(field.input.value.indexOf(option.name) !== -1) ? 'activeChk' : ''}`} key={index}>
             <label className='full-fill'>
               <input type="checkbox"
-                     name={`categories[${index}]`}
+                     name={`${field.name}[${index}]`}
                      value={option.name}
                      style={{display: 'none'}}
                      checked={(field.input.value.indexOf(option.name) !== -1)}
@@ -144,9 +141,31 @@ export class NewJobPost extends React.Component {
     );
   }
 
+
+  renderRadioField(field) {
+    const colWidth = 12/(field.options.length)
+    return(
+      <div className='form-group'>
+        {field.options.map((option, index) => (
+          <div className={`col-xs-${colWidth} no-padding chkBox ${field.className} ${(field.input.value===option.value) ? 'activeChk' : ''}`} key={index}>
+            <label className='full-fill'>
+              <input {...field.input} type='radio' value={option.value} className='form-control' style={{display: 'none'}} onChange={field.input.onChange}/>
+              {option.type}
+            </label>
+          </div>
+        ))}
+        {field.meta.touched &&  field.meta.error && 
+           <span className="control-label error-message">{field.meta.error}</span>}
+      </div>
+    )  
+  }
   
+  budgetText(){
+    return (this.props.payTypeSelector=='fixed_rate') ? 'What is your budget?' : 'What is your expected hourly rate?'
+  }
+
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, payTypeSelector } = this.props;
     return (
       <div className='jumbotron'>
         <form onSubmit={handleSubmit(this.handleSubmit)} >
@@ -157,8 +176,8 @@ export class NewJobPost extends React.Component {
 
             <Field
               name="categories"
-              label="Weekdays"
-              component={this.renderChks.bind(this)}
+              label="Categories"
+              component={this.renderChks}
               options={categories}
             />
 
@@ -186,11 +205,41 @@ export class NewJobPost extends React.Component {
 
           <div className='col-xs-12 margin-top-job'>
             <div className='col-xs-12 no-padding'>
-              <label> What is your budget? </label>
+              <label> {this.budgetText()} </label>
             </div>
 
             <div className='col-xs-12 no-padding'>
               <Field name="budget" component={this.renderTextField} maxLength={6} placeholder={''} />
+            </div>
+          </div>
+
+          <div className='col-xs-12 margin-top-job form-group '>
+            <div className='col-xs-12 no-padding'>
+              <label> How would you like to pay? </label>
+            </div>
+
+            <div className='col-xs-12 no-padding'>
+              <Field name="payType" component={this.renderRadioField} options={payTypes} className='center-label' />
+            </div>
+          </div>
+
+          <div className='col-xs-12 margin-top-job form-group '>
+            <div className='col-xs-12 no-padding'>
+              <label> How long do you expect this job to last? </label>
+            </div>
+
+            <div className='col-xs-12 no-padding'>
+              <Field name="lasting" component={this.renderRadioField} options={lasting} />
+            </div>
+          </div>
+
+          <div className='col-xs-12 margin-top-job form-group '>
+            <div className='col-xs-12 no-padding'>
+              <label> Do you want freelancers to find and apply to </label>
+            </div>
+
+            <div className='col-xs-12 no-padding'>
+              <Field name="privacy" component={this.renderRadioField} options={privacy} className='center-label'/>
             </div>
           </div>
 
@@ -210,6 +259,7 @@ export class NewJobPost extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    payTypeSelector: selector(state, 'payType')
   };
 }
 
@@ -222,7 +272,8 @@ function mapDispatchToProps(dispatch) {
 NewJobPost = reduxForm({
   form: 'NewJobPostForm',
   asyncValidating: true,
-  validate
+  validate,
+  initialValues: {payType: 'hour_rate', lasting: 'less_than_1_week', privacy: 'public_job'}
 })(NewJobPost);
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewJobPost);
