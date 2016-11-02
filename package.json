@@ -38,6 +38,7 @@
     "localforage": "^1.4.3",
     "lodash": "^4.16.4",
     "lodash-webpack-plugin": "^0.10.2",
+    "material-ui": "^0.16.1",
     "node-sass": "^3.10.1",
     "pretty-error": "^2.0.1",
     "react": "^15.3.2",
