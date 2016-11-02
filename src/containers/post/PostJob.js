@@ -44,8 +44,9 @@ export class PostJob extends React.Component {
         <Tabs
           onChange={(value)=>this.handleChange(value)}
           value={this.state.slideIndex}
+          className='customTab'
         >
-          <Tab label="New" value={0} />
+          <Tab label="New" value={0}/>
           <Tab label="Pending" value={1} />
           <Tab label="Work in Progress" value={2} />
           <Tab label="Completed" value={3} />

@@ -243,9 +243,9 @@ export class NewJobPost extends React.Component {
             </div>
           </div>
 
-          <div className="col-xs-12 margin-top-job">
+          <div className="col-xs-12 margin-top-job no-padding">
             <div className="form-group col-xs-12">
-              <button type="submit" className="btn btn-default">Post a Job</button>
+              <button type="submit" className="btn btn-success btn-block">Post a Job</button>
             </div>
           </div>
 

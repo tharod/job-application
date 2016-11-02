@@ -176,3 +176,7 @@ body{
 .center-label{
   padding-top: 10px;
 }
+
+.customTab > :first-child{
+  white-space: normal !important;
+}
