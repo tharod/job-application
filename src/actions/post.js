@@ -1,6 +1,7 @@
 import * as types from '../constants/types';
 import * as routePath from '../constants/routePath';
 import 'whatwg-fetch';
+import { push } from 'react-router-redux';
 
 export function pendingJobs() {
   return function(dispatch){
@@ -34,5 +35,17 @@ export function pendingJobs() {
       .catch(function(error){
         console.log("Opps...", "Error while pendingjob access:: " + error);
       })
+  }
+}
+
+export function newPostJob({title, budget, categories, payType, description, lasting, privacy}) {
+  console.log("==========CREATE_JOB===============")
+  return function(dispatch){
+    dispatch({ type: types.CREATE_JOB })
+    dispatch({
+      type: types.SUCCESS_CREATE_JOB,
+      data: {}
+    })
+    dispatch(push('/search-job'));
   }
 }

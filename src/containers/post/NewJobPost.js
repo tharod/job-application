@@ -77,10 +77,8 @@ export class NewJobPost extends React.Component {
     }
   }
 
-  handleSubmit({title, budget, categories, payType}) {
-    debugger
-    console.log("===============form post new============")
-    //this.props.authActions.createUser({email, password, country, firstName, lastName})
+  handleSubmit({title, budget, categories, payType, description, lasting, privacy}) {
+    this.props.postActions.newPostJob({title, budget, categories, description, payType, lasting, privacy})
   }
 
   renderTextField(field) {
