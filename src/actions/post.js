@@ -4,6 +4,7 @@ import 'whatwg-fetch';
 import { push } from 'react-router-redux';
 
 export function pendingJobs() {
+  console.log("==============Loading pendingjob=============")
   return function(dispatch){
     dispatch({ type: types.PENDING_JOB })
     const url = API_URL + routePath.PENDING_JOB
@@ -46,6 +47,6 @@ export function newPostJob({title, budget, categories, payType, description, las
       type: types.SUCCESS_CREATE_JOB,
       data: {}
     })
-    dispatch(push('/search-job'));
+    dispatch(push('/post?active=pendingJobs'));
   }
 }

@@ -11,6 +11,8 @@ import PendingJobsList from '../../components/posts/PendingJobsList';
 import NewJobPost from './NewJobPost';
 
 import {Tabs, Tab} from 'material-ui/Tabs';
+import { push } from 'react-router-redux';
+import { POST_JOB } from '../../constants/routePath';
 
 const styles = {
   slide: {
@@ -28,6 +30,7 @@ export class PostJob extends React.Component {
   }
 
   handleChange(value) {
+    console.log("==========handleChange==========", value)
     this.setState({
       slideIndex: value,
     });
@@ -36,6 +39,16 @@ export class PostJob extends React.Component {
       this.props.jobActions.pendingJobs()
     }
   };
+
+  componentDidUpdate(){
+   let index = 0;
+    console.log("===========componentWillReceiveProps===========",POST_JOB, this.props.location, this.state.slideIndex)
+    if (this.props.location.query.active==='pendingJobs' && this.state.slideIndex != 1) {
+      this.handleChange(1)
+      this.props.dispatch(push(POST_JOB));
+    }
+   
+  }
 
   render() {
     const pendingJobSubmitting = this.props.pendingJobs.get('submitting')
