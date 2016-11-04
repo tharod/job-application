@@ -4,6 +4,7 @@ import auth from './auth';
 import forgotPassword from './forgotPassword';
 import customRehydrate from './customRehydrate';
 import pendingJobs from './pendingJobs';
+import pendingJobDetails from './pendingJobDetails';
 import createJobs from './createJobs';
 import { reducer as formReducer } from 'redux-form';
 
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   auth: auth,
   forgotPassword: forgotPassword,
   pendingJobs: pendingJobs,
+  pendingJobDetails: pendingJobDetails,
   pageLoader: pageLoaderReducer,
   createJobs: createJobs,
   form: formReducer,

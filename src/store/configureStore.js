@@ -49,7 +49,7 @@ const store = compose(
   //   )
   // );
 
-  persistStore(store, {transforms: [expireTransform, compressor], blacklist: ['customRehydrate', 'tabs'], storage: localForage }, () => {
+  persistStore(store, {transforms: [expireTransform, compressor], blacklist: ['customRehydrate', 'tabs', 'pendingJobs', 'pendingJobDetails'], storage: localForage }, () => {
     store.dispatch({
       type: REHYDRATED_DONE
     })

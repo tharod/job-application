@@ -2,9 +2,9 @@ import * as types from '../constants/types';
 import * as routePath from '../constants/routePath';
 import 'whatwg-fetch';
 import { push } from 'react-router-redux';
+// import _ from 'lodash';
 
 export function pendingJobs() {
-  console.log("==============Loading pendingjob=============")
   return function(dispatch){
     dispatch({ type: types.PENDING_JOB })
     const url = API_URL + routePath.PENDING_JOB
@@ -40,7 +40,6 @@ export function pendingJobs() {
 }
 
 export function newPostJob({title, budget, categories, payType, description, lasting, privacy}) {
-  console.log("==========CREATE_JOB===============")
   return function(dispatch){
     dispatch({ type: types.CREATE_JOB })
     dispatch({
@@ -48,5 +47,64 @@ export function newPostJob({title, budget, categories, payType, description, las
       data: {}
     })
     dispatch(push('/post?active=pendingJobs'));
+  }
+}
+
+function sortingData(arr, keyArr){
+  const sorted = []
+  keyArr.map(function(value, index){
+    arr.map(function(v1, i1){
+      if(v1.job_id===value){
+        sorted.push(v1)
+      }
+    })
+  })
+ return sorted
+}
+
+export function pendingJobDetails(ids) {
+  return function(dispatch){
+    let promises = [];
+
+    dispatch({ type: types.PENDING_JOB_DETAILS })
+    const url = API_URL + routePath.PENDING_JOB_DETAILS
+    let datas = []
+    ids.map(function(id, index){
+      let promise = fetch(url, {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+        .then(function(response){
+          return(response.json());
+        })
+        .then(function(data){
+          if (data.result==0){
+            datas.push(data)
+          }else{
+            dispatch({
+              type: types.PENDING_JOB_DETAILS_ERROR
+            })
+          }
+        })
+        .catch(function(error){
+          console.log("Opps...", "Error while PENDING_JOB_DETAILS access:: " + error);
+        })
+      promises.push(promise)
+    })
+    return Promise.all(promises).then(() => {
+      dispatch({
+        type: types.PENDING_JOB_DETAILS_SUCCESS,
+        data: sortingData(datas, ids)
+      })
+    });
+
+
   }
 }

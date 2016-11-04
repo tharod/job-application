@@ -3,7 +3,7 @@ import Immutable from 'immutable';
 import { Map } from 'immutable'
 
 const initialState = Immutable.fromJS(
-  { job_id: [], submitting: false }
+  { job_id: [], submitting: null }
 );
 
 export default function pendingJobs(state = initialState, action) {

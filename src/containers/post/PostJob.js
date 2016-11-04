@@ -7,12 +7,14 @@ import SwipeableViews from 'react-swipeable-views';
 import * as types from '../../constants/types';
 import * as jobActions from '../../actions/post';
 
-import PendingJobsList from '../../components/posts/PendingJobsList';
+import PendingJobsList from './PendingJobsList';
 import NewJobPost from './NewJobPost';
 
 import {Tabs, Tab} from 'material-ui/Tabs';
 import { push } from 'react-router-redux';
 import { POST_JOB } from '../../constants/routePath';
+
+import _ from 'lodash';
 
 const styles = {
   slide: {
@@ -24,15 +26,19 @@ export class PostJob extends React.Component {
 
   constructor(props) {
     super(props);
+    this.handleChange = this.handleChange.bind(this)
     this.state = {
       slideIndex: 0,
+      totalRecord: 0,
+      currentPage: 0,
+      perPage: 10
     };
   }
 
   handleChange(value) {
     console.log("==========handleChange==========", value)
     this.setState({
-      slideIndex: value,
+      slideIndex: value
     });
 
     if (value === 1){
@@ -42,15 +48,14 @@ export class PostJob extends React.Component {
 
   componentDidUpdate(){
    let index = 0;
-    console.log("===========componentWillReceiveProps===========",POST_JOB, this.props.location, this.state.slideIndex)
     if (this.props.location.query.active==='pendingJobs' && this.state.slideIndex != 1) {
       this.handleChange(1)
       this.props.dispatch(push(POST_JOB));
     }
-   
   }
 
   render() {
+    // console.log("============++Rending==========================")
     const pendingJobSubmitting = this.props.pendingJobs.get('submitting')
     return (
       <div>
@@ -75,12 +80,12 @@ export class PostJob extends React.Component {
           
           <div style={styles.slide}>
             {
-              pendingJobSubmitting ? 'Loading...' : <PendingJobsList />
+              (pendingJobSubmitting===null || pendingJobSubmitting) ? 'Loading...' : <PendingJobsList pendingJobs={this.props.pendingJobs} jobActions={this.props.jobActions}/>
             }
           </div>
           
           <div style={styles.slide}>
-            Work in Progress Page
+            Work in Progress
           </div>
           
           <div style={styles.slide}>

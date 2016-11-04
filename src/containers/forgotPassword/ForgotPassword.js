@@ -43,7 +43,6 @@ export class ForgotPassword extends React.Component {
 
   render() {
     const { handleSubmit, isSubmitting, forgotPassword } = this.props;
-    console.log("====================submitting===================props", isSubmitting)
     return (
       <div className="jumbotron center-block">
         <h3>Forgot your password?</h3>
