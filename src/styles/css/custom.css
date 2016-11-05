@@ -180,3 +180,8 @@ body{
 .customTab > :first-child{
   white-space: normal !important;
 }
+
+.btn-pend-job-group .btn{
+  font-size: 10px;
+}
+

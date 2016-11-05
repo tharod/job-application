@@ -11,6 +11,7 @@ export class PendingJobsList extends React.Component {
   constructor(props) {
     super(props);
     props.dispatch({ type: types.PENDING_JOB_DETAILS_RESET })
+    this._loadMore = this._loadMore.bind(this)
     this.state = {
       totalRecord: this.props.pendingJobs.get('job_id').count(),
       currentPage: 0,
@@ -45,20 +46,63 @@ export class PendingJobsList extends React.Component {
     return this.props.pendingJobDetails.getIn(['posts']).toJS().map((post) => {
       return(
         <div className="panel panel-default">
-          <div className="panel-heading">Panel heading without title</div>
-          <div className="panel-body">
-            {post.title}
+          <div className="panel-heading clearfix">
+            <div className='col-xs-3'>{post.post_date}</div>
+            <div className='col-xs-6 text-center'>{post.title}</div>
+            <div className='col-xs-3'>receiving offer</div>
           </div>
+          <div className="panel-body">
+            <div className='row'>
+              <div className='col-xs-3'> Description </div>
+              <div className='col-xs-1'></div>
+              <div className='col-xs-8'> {post.description} </div>
+
+            </div>
+
+            <div className='row margin-top-job'>
+              <div className='col-xs-3'> Budget </div>
+              <div className='col-xs-1'></div>
+              <div className='col-xs-8'> { post.pay_type==='hour_rate' ? `${post.hour_rate} (per hour)` : `${post.budget} (Fixed price)` } </div>
+            </div>
+
+            <div className='row margin-top-job no-padding'>
+              <div className='col-xs-3'> Timeframe </div>
+              <div className='col-xs-1'></div>
+              <div className='col-xs-8'> {post.lasting} </div>
+            </div>
+
+            <div className='row margin-top-job'>
+              <div className='col-xs-3'> Keywords </div>
+              <div className='col-xs-1'></div>
+              <div className='col-xs-8'> {post.category.join(", ")} </div>
+            </div>
+
+            <div className='row margin-top-job btn-pend-job-group'>
+              <div className='col-xs-3'> <button className='btn btn-xs btn-success'> invite ({post.invited_count}) </button> </div>
+              <div className='col-xs-5'> <button className='btn btn-xs btn-warning'> Recommended ({post.recommended_count}) </button> </div>
+              <div className='col-xs-4'> <button className='btn btn-xs btn-success'> Proposal ({post.proposal_count}) </button> </div>
+            </div>
+          </div>
+
+          <div className="panel-footer">
+            <div className='row'>
+              <div className='col-xs-4'> {post.privacy} </div>
+              <div className='col-xs-5 pull-right'> 
+                <div className='col-xs-6'> Edit </div>
+                <div className='col-xs-6'> Delete </div> 
+              </div>
+            </div>
+          </div>
+
         </div>
       )
     })
   }
 
   render() {
-    console.log("==========this.state.loadingMore==========", this.state.loadingMore)
     return (
       <div>
-        <InfiniteScroll loadingMore={this.state.loadingMore} elementIsScrollable={false} loadMore={this._loadMore.bind(this)}>
+        <InfiniteScroll loadingMore={this.state.loadingMore} elementIsScrollable={false} loadMore={this._loadMore}>
           {this._renderJobs()}
         </InfiniteScroll>
       </div>

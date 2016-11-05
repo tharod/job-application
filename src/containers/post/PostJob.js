@@ -36,7 +36,6 @@ export class PostJob extends React.Component {
   }
 
   handleChange(value) {
-    console.log("==========handleChange==========", value)
     this.setState({
       slideIndex: value
     });
@@ -80,7 +79,7 @@ export class PostJob extends React.Component {
           
           <div style={styles.slide}>
             {
-              (pendingJobSubmitting===null || pendingJobSubmitting) ? 'Loading...' : <PendingJobsList pendingJobs={this.props.pendingJobs} jobActions={this.props.jobActions}/>
+              (pendingJobSubmitting===null || pendingJobSubmitting) ? 'Loading' : <PendingJobsList pendingJobs={this.props.pendingJobs} jobActions={this.props.jobActions}/>
             }
           </div>
           
