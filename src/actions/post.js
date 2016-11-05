@@ -40,12 +40,33 @@ export function pendingJobs() {
 }
 
 export function newPostJob({title, budget, categories, payType, description, lasting, privacy}) {
+    let hour_rate=null
+    let fixed_price = null
+
+    if(payType==='hour_rate'){
+      hour_rate = budget
+      fixed_price = null
+    }
+
+    if(payType==='fixed_rate'){
+      hour_rate = null
+      fixed_price = budget
+    }
+  
+    const hash = {title: title, description: description, currency: 1, budget: fixed_price, hour_rate: hour_rate, pay_type: payType, category: categories, lasting: lasting, privacy: privacy}
+    
+    alert(JSON.stringify(hash))
+
   return function(dispatch){
     dispatch({ type: types.CREATE_JOB })
     dispatch({
       type: types.SUCCESS_CREATE_JOB,
       data: {}
     })
+
+       
+
+
     dispatch(push('/post?active=pendingJobs'));
   }
 }
@@ -108,3 +129,14 @@ export function pendingJobDetails(ids) {
 
   }
 }
+
+export function deletePendingJobPost(id) {
+  return function(dispatch){
+    // dispatch({ type: types.PENDING_JOB_DELETE })
+    dispatch({
+      type: types.PENDING_JOB_DELETE_SUCCESS,
+      data: {job_id: id}
+    })
+  }
+}
+

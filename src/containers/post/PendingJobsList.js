@@ -5,6 +5,9 @@ import InfiniteScroll from 'redux-infinite-scroll';
 import _ from 'lodash';
 import { startIndex, endIndex } from '../../utils/paginationHelper'
 import * as types from '../../constants/types';
+import { push } from 'react-router-redux';
+import { SEARCH_JOB } from '../../constants/routePath';
+// import SweetAlert from 'react-bootstrap-sweetalert';
 
 export class PendingJobsList extends React.Component {
 
@@ -12,6 +15,10 @@ export class PendingJobsList extends React.Component {
     super(props);
     props.dispatch({ type: types.PENDING_JOB_DETAILS_RESET })
     this._loadMore = this._loadMore.bind(this)
+    this.handleInviteClick = this.handleInviteClick.bind(this)
+    this.handleRecommendedClick = this.handleRecommendedClick.bind(this)
+    this.handleProposalClick = this.handleProposalClick.bind(this)
+
     this.state = {
       totalRecord: this.props.pendingJobs.get('job_id').count(),
       currentPage: 0,
@@ -19,6 +26,53 @@ export class PendingJobsList extends React.Component {
       loadingMore: false,
       completed: false
     };
+  }
+
+  // handleAlertConfirm(){
+  //   this.setState({
+  //     alert: null
+  //   });
+  // }
+
+  // handleAlertCancel(){
+  //   this.setState({
+  //     alert: null
+  //   });
+  // }
+
+  // alertWindow(){
+  //   if(this.state.alert){
+  //     return(
+  //       <SweetAlert
+  //         warning
+  //         showCancel
+  //         confirmBtnText="Yes, delete it!"
+  //         confirmBtnBsStyle="danger"
+  //         cancelBtnBsStyle="default"
+  //         title="Are you sure?"
+  //         onConfirm={() => this.handleAlertConfirm()}
+  //         onCancel={() => this.handleAlertCancel()}
+  //         >
+  //         You will not be able to recover this post!
+  //       </SweetAlert>
+  //     )
+  //   }
+  // }
+
+  handleInviteClick(invite) {
+    this.props.dispatch(push(SEARCH_JOB));
+  }
+
+  handleRecommendedClick(recommended) {
+    if(recommended===0){
+      this.props.dispatch(push(SEARCH_JOB));
+    }
+  }
+
+  handleProposalClick(proposal) {
+    if(proposal===0){
+      this.props.dispatch(push(SEARCH_JOB));
+    }
   }
 
   _loadMore() {
@@ -39,6 +93,12 @@ export class PendingJobsList extends React.Component {
       if(_.isEmpty(job_ids)){
         this.setState({completed: true, loadingMore: false})
       }
+    }
+  }
+
+  confirmDeletePost(id){
+    if (window.confirm("Do you really want to delete it?") ){
+      this.props.jobActions.deletePendingJobPost(id)
     }
   }
 
@@ -78,9 +138,15 @@ export class PendingJobsList extends React.Component {
             </div>
 
             <div className='row margin-top-job btn-pend-job-group'>
-              <div className='col-xs-3'> <button className='btn btn-xs btn-success'> invite ({post.invited_count}) </button> </div>
-              <div className='col-xs-5'> <button className='btn btn-xs btn-warning'> Recommended ({post.recommended_count}) </button> </div>
-              <div className='col-xs-4'> <button className='btn btn-xs btn-success'> Proposal ({post.proposal_count}) </button> </div>
+              <div className='col-xs-3'> 
+                <button className='btn btn-xs btn-success' onClick={() => this.handleInviteClick(post.invited_count)}> invite ({post.invited_count}) </button>
+              </div>
+              <div className='col-xs-5'>
+                <button className='btn btn-xs btn-warning' onClick={() => this.handleRecommendedClick(post.recommended_count)}> Recommended ({post.recommended_count}) </button>
+              </div>
+              <div className='col-xs-4'>
+                <button className='btn btn-xs btn-success' onClick={() => this.handleProposalClick(post.proposal_count)}> Proposal ({post.proposal_count}) </button>
+              </div>
             </div>
           </div>
 
@@ -88,8 +154,8 @@ export class PendingJobsList extends React.Component {
             <div className='row'>
               <div className='col-xs-4'> {post.privacy} </div>
               <div className='col-xs-5 pull-right'> 
-                <div className='col-xs-6'> Edit </div>
-                <div className='col-xs-6'> Delete </div> 
+                <div className='col-xs-6'> <span> Edit </span> </div>
+                <div className='col-xs-6'> <span onClick={() => this.confirmDeletePost(post.job_id) }> Delete </span> </div> 
               </div>
             </div>
           </div>
@@ -100,6 +166,7 @@ export class PendingJobsList extends React.Component {
   }
 
   render() {
+    console.log("=====================render again=====================")
     return (
       <div>
         <InfiniteScroll loadingMore={this.state.loadingMore} elementIsScrollable={false} loadMore={this._loadMore}>

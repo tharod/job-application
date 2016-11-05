@@ -39,6 +39,8 @@ export class PostJob extends React.Component {
     this.setState({
       slideIndex: value
     });
+    
+    window.scrollTo(0, 0)
 
     if (value === 1){
       this.props.jobActions.pendingJobs()
