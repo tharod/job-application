@@ -14,8 +14,8 @@ export default function pendingJobDetails(state = initialState, action) {
       return state.set('posts', state.get('posts').push(...data));
     case types.PENDING_JOB_DETAILS_ERROR:
       return state.merge({ submitting: false })
-    case types.PENDING_JOB_DETAILS_DONE:
-      return state.merge({ submitting: false })
+    case types.PENDING_JOB_DETAILS_RESET:
+      return initialState
     default:
       return state;
   }
