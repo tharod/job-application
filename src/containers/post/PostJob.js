@@ -16,9 +16,6 @@ import { POST_JOB } from '../../constants/routePath';
 
 import _ from 'lodash';
 
-var injectTapEventPlugin = require("react-tap-event-plugin");
-injectTapEventPlugin();
-
 const styles = {
   slide: {
     padding: 10,
@@ -47,6 +44,9 @@ export class PostJob extends React.Component {
 
     if (value === 1){
       this.props.jobActions.pendingJobs()
+    } else {
+      this.props.dispatch({ type: types.PENDING_JOB_DETAILS_RESET })
+      this.props.dispatch({ type: types.PENDING_JOB_RESET })
     }
   };
 

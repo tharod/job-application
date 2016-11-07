@@ -2,6 +2,9 @@ import React, { PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import Header from '../containers/Header';
 
+var injectTapEventPlugin = require("react-tap-event-plugin");
+injectTapEventPlugin();
+
 if (typeof window != 'undefined' && window.document) {
   require('../styles/css/custom.css')
 }

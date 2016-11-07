@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import InfiniteScroll from 'redux-infinite-scroll';
 import _ from 'lodash';
 import { startIndex, endIndex } from '../../utils/paginationHelper'
-import * as types from '../../constants/types';
+// import * as types from '../../constants/types';
 import { push } from 'react-router-redux';
 import { SEARCH_JOB } from '../../constants/routePath';
 // import SweetAlert from 'react-bootstrap-sweetalert';
@@ -13,7 +13,6 @@ export class PendingJobsList extends React.Component {
 
   constructor(props) {
     super(props);
-    props.dispatch({ type: types.PENDING_JOB_DETAILS_RESET })
     this._loadMore = this._loadMore.bind(this)
     this.handleInviteClick = this.handleInviteClick.bind(this)
     this.handleRecommendedClick = this.handleRecommendedClick.bind(this)

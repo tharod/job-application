@@ -15,6 +15,8 @@ export default function pendingJobs(state = initialState, action) {
       return state.merge({ job_id: data.job_id, submitting: false })
     case types.PENDING_JOB_ERROR:
       return state.merge({ job_id: [], submitting: false })
+    case types.PENDING_JOB_RESET:
+      return initialState
     default:
       return state;
   }
