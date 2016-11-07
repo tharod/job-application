@@ -16,6 +16,9 @@ import { POST_JOB } from '../../constants/routePath';
 
 import _ from 'lodash';
 
+var injectTapEventPlugin = require("react-tap-event-plugin");
+injectTapEventPlugin();
+
 const styles = {
   slide: {
     padding: 10,
@@ -65,15 +68,16 @@ export class PostJob extends React.Component {
           value={this.state.slideIndex}
           className='customTab'
         >
-          <Tab label="New" value={0}/>
+          <Tab label="New" value={0} />
           <Tab label="Pending" value={1} />
-          <Tab label="Work in Progress" value={2} />
+          <Tab label="Working" value={2} />
           <Tab label="Completed" value={3} />
         </Tabs>
         
         <SwipeableViews
           index={this.state.slideIndex}
           onChangeIndex={(index) => this.handleChange(index)}
+          threshold={10}
         >
           <div style={styles.slide}>
             <NewJobPost />

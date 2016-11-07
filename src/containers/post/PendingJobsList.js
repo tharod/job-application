@@ -107,34 +107,31 @@ export class PendingJobsList extends React.Component {
       return(
         <div className="panel panel-default">
           <div className="panel-heading clearfix">
-            <div className='col-xs-3'>{post.post_date}</div>
-            <div className='col-xs-6 text-center'>{post.title}</div>
-            <div className='col-xs-3'>receiving offer</div>
+            <strong>{post.title}</strong>
           </div>
           <div className="panel-body">
             <div className='row'>
-              <div className='col-xs-3'> Description </div>
-              <div className='col-xs-1'></div>
-              <div className='col-xs-8'> {post.description} </div>
-
+              <div className='col-xs-12'> {post.description} </div>
             </div>
 
             <div className='row margin-top-job'>
-              <div className='col-xs-3'> Budget </div>
-              <div className='col-xs-1'></div>
-              <div className='col-xs-8'> { post.pay_type==='hour_rate' ? `${post.hour_rate} (per hour)` : `${post.budget} (Fixed price)` } </div>
+              <div className='col-xs-4'> Post Date </div>
+              <div className='col-xs-8 pull-right'> { post.post_date } </div>
+            </div>
+
+            <div className='row margin-top-job'>
+              <div className='col-xs-4'> Budget </div>
+              <div className='col-xs-8 pull-right'> { post.pay_type==='hour_rate' ? `${post.hour_rate} (per hour)` : `${post.budget} (Fixed price)` } </div>
             </div>
 
             <div className='row margin-top-job no-padding'>
-              <div className='col-xs-3'> Timeframe </div>
-              <div className='col-xs-1'></div>
-              <div className='col-xs-8'> {post.lasting} </div>
+              <div className='col-xs-4'> Timeframe </div>
+              <div className='col-xs-8 pull-right'> {post.lasting} </div>
             </div>
 
             <div className='row margin-top-job'>
-              <div className='col-xs-3'> Keywords </div>
-              <div className='col-xs-1'></div>
-              <div className='col-xs-8'> {post.category.join(", ")} </div>
+              <div className='col-xs-4'> Keywords </div>
+              <div className='col-xs-8 pull-right'> {post.category.join(", ")} </div>
             </div>
 
             <div className='row margin-top-job btn-pend-job-group'>
