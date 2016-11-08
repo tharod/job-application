@@ -9,6 +9,7 @@ import SignUp from './containers/auth/SignUp';
 import ForgotPassword from './containers/forgotPassword/ForgotPassword';
 import ChangePassword from './containers/auth/ChangePassword';
 import PostJob from './containers/post/PostJob';
+import InvitedJobs from './containers/post/InvitedJobs';
 import * as routePath from './constants/routePath'
 
 const routes = (
@@ -21,6 +22,7 @@ const routes = (
       <Route path="/changePassword" component={ChangePassword}/>
       <Route path="/search-job" component={SearchJob}/>
       <Route path={routePath.POST_JOB} component={PostJob}/>
+      <Route path={routePath.INVITED_JOBS} component={InvitedJobs}/>
     </Route>
   </Router>
 )

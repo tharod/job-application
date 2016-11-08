@@ -1,6 +1,6 @@
 import * as types from '../constants/types';
 import Immutable from 'immutable';
-// [{ job_id: null, title: null, description: null, budget: null, hourly_rate: null, lasting: null, pay_type: null, privacy: null, invited_count: null, recommended_count: null, proposal_count: null, submitting: false }]
+
 const initialState = Immutable.fromJS(
   {posts: [], submitting: false}
 );

@@ -71,18 +71,6 @@ export function newPostJob({title, budget, categories, payType, description, las
   }
 }
 
-function sortingData(arr, keyArr){
-  const sorted = []
-  keyArr.map(function(value, index){
-    arr.map(function(v1, i1){
-      if(v1.job_id===value){
-        sorted.push(v1)
-      }
-    })
-  })
- return sorted
-}
-
 export function pendingJobDetails(ids) {
   return function(dispatch){
     let promises = [];
@@ -122,7 +110,7 @@ export function pendingJobDetails(ids) {
     return Promise.all(promises).then(() => {
       dispatch({
         type: types.PENDING_JOB_DETAILS_SUCCESS,
-        data: sortingData(datas, ids)
+        data: sortingData(datas, ids, 'job_id')
       })
     });
 
@@ -140,3 +128,105 @@ export function deletePendingJobPost(id) {
   }
 }
 
+export function invitedJobs(job_id) {
+  return function(dispatch){
+    dispatch({ type: types.INVITED_JOBS })
+    const url = API_URL + '/jobs/invitedJobs'
+    fetch(url, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({job_id: job_id})
+      })
+      .then(function(response){
+        return(response.json());
+      })
+      .then(function(data){
+        if (data.result==0){
+          dispatch({
+            type: types.INVITED_JOBS_SUCCESS,
+            data: data
+          })
+        }else{
+          dispatch({
+            type: types.INVITED_JOBS_ERROR,
+            data: data
+          })
+        }
+      })
+      .catch(function(error){
+        console.log("Opps...", "Error while invitedJobs access:: " + error);
+      })
+  }
+}
+
+export function invitedJobUserDetails(ids) {
+  return function(dispatch){
+    let promises = [];
+
+    dispatch({ type: types.INVITED_JOBS_USER_DETAILS })
+    const url = API_URL + '/jobs/invitedJobsUserProfile'
+    let datas = []
+    ids.map(function(id, index){
+      let promise = fetch(url, {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+        .then(function(response){
+          return(response.json());
+        })
+        .then(function(data){
+          if (data.result==0){
+            const arr = {
+              first_name: data.first_name,
+              last_name: data.last_name,
+              user_id: data.user_id,
+              introduction: data.introduction,
+              currency: data.currency,
+              hour_rate: data.hour_rate,
+              level: data.level,
+              profile_picture: data.profile_picture,
+              is_liked: data.is_liked
+            }
+            datas.push(arr)
+          }else{
+            dispatch({
+              type: types.INVITED_JOBS_USER_DETAILS_ERROR
+            })
+          }
+        })
+        .catch(function(error){
+          console.log("Opps...", "Error while INVITED_JOBS_USER_DETAILS access:: " + error);
+        })
+      promises.push(promise)
+    })
+    return Promise.all(promises).then(() => {
+      dispatch({
+        type: types.INVITED_JOBS_USER_DETAILS_SUCCESS,
+        data: sortingData(datas, ids, 'user_id')
+      })
+    });
+  }
+}
+
+function sortingData(arr, keyArr, keyName){
+  const sorted = []
+  keyArr.map(function(value, index){
+    arr.map(function(v1, i1){
+      if(v1[keyName]===value){
+        sorted.push(v1)
+      }
+    })
+  })
+ return sorted
+}

@@ -58,8 +58,8 @@ export class PendingJobsList extends React.Component {
   //   }
   // }
 
-  handleInviteClick(invite) {
-    this.props.dispatch(push(SEARCH_JOB));
+  handleInviteClick(job_id) {
+    this.props.dispatch(push(`/jobs/${job_id}/invited-jobs`));
   }
 
   handleRecommendedClick(recommended) {
@@ -135,7 +135,7 @@ export class PendingJobsList extends React.Component {
 
             <div className='row margin-top-job btn-pend-job-group'>
               <div className='col-xs-3'> 
-                <button className='btn btn-xs btn-success' onClick={() => this.handleInviteClick(post.invited_count)}> invite ({post.invited_count}) </button>
+                <button className='btn btn-xs btn-success' onClick={() => this.handleInviteClick(post.job_id)}> invite ({post.invited_count}) </button>
               </div>
               <div className='col-xs-5'>
                 <button className='btn btn-xs btn-warning' onClick={() => this.handleRecommendedClick(post.recommended_count)}> Recommended ({post.recommended_count}) </button>
