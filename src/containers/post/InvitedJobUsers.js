@@ -6,6 +6,7 @@ import _ from 'lodash';
 import { startIndex, endIndex } from '../../utils/paginationHelper'
 import { push } from 'react-router-redux';
 import * as userActions from '../../actions/user';
+import Rating from 'react-rating';
 
 export class InvitedJobUsers extends React.Component {
 
@@ -55,16 +56,18 @@ export class InvitedJobUsers extends React.Component {
         <div className="panel panel-default" key={index}>
           <div className="panel-body">
             <div className='row relative'>
-              <div className='col-xs-4'>
+              <div className='col-xs-5'>
                 <div className='col-xs-12 no-padding'>
-                  <img src={`${API_URL}${user.profile_picture}`} height='100' width='100' />
+                  <img src={`${API_URL}${user.profile_picture}`} height='80' width='80' />
                 </div>
                 <div className='col-xs-12 no-padding'>
-                  {user.first_name} {user.last_name}
+                  <span>{user.first_name} {user.last_name}</span><br/>
+                  <span> <Rating readonly={true} initialRate={user.level} stop={Math.ceil(user.level)} full={'glyphicon glyphicon-star star-color'} empty={'glyphicon glyphicon-star-empty star-color'}/> ({user.level})
+                  </span>
                 </div>
               </div>
               
-              <div className='col-xs-6 introduction-bottom'>
+              <div className='col-xs-5 introduction-bottom pad-left-none'>
                 <div className='col-xs-12 no-padding'>
                   {user.introduction}
                 </div> 

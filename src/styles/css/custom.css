@@ -227,3 +227,11 @@ body{
 .introduction-bottom{
   margin-bottom: 25px;
 }
+
+.star-color{
+  color: rgb(245, 174, 6);
+}
+
+.pad-left-none{
+  padding-left: 0px;
+}
