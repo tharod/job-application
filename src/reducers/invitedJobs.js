@@ -15,6 +15,9 @@ export default function invitedJobs(state = initialState, action) {
       return state.merge({ user_id: data.user_id, submitting: false })
     case types.INVITED_JOBS_ERROR:
       return state.merge({ user_id: [], submitting: false })
+    case types.INVITED_JOBS_RESET:
+      console.log("================reducer================")
+      return initialState
     default:
       return state;
   }

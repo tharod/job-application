@@ -13,6 +13,7 @@ import InvitedJobUsers from './InvitedJobUsers';
 const styles = {
   slide: {
     padding: 10,
+    minHeight: 300,
   },
 };
 
@@ -21,6 +22,8 @@ export class InvitedJobs extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this)
+    const job_id = props.params.id
+    this.loadInvitedJobs = this.loadInvitedJobs.bind(this, job_id)
     this.state = {
       slideIndex: 0,
     };
@@ -30,16 +33,20 @@ export class InvitedJobs extends React.Component {
     this.setState({
       slideIndex: value
     });
+    this.loadInvitedJobs(value)
   };
 
   componentWillMount(){
-    const job_id = this.props.params.id
+    this.loadInvitedJobs(this.state.slideIndex)
+  }
+
+  loadInvitedJobs(job_id, slideIndex){
     window.scrollTo(0, 0)
-    if (this.state.slideIndex === 0){
+    if (slideIndex === 0){
       this.props.jobActions.invitedJobs(job_id)
     } else {
-      //this.props.dispatch({ type: types.PENDING_JOB_DETAILS_RESET })
-      //this.props.dispatch({ type: types.PENDING_JOB_RESET })
+      this.props.dispatch({ type: types.INVITED_JOBS_RESET })
+      this.props.dispatch({ type: types.INVITED_JOBS_USER_DETAILS_RESET })
     }
   }
 
@@ -74,9 +81,7 @@ export class InvitedJobs extends React.Component {
       </div>
     );
   }
-
 }
-
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -86,7 +91,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    jobActions: bindActionCreators(jobActions, dispatch)
+    jobActions: bindActionCreators(jobActions, dispatch),
+    dispatch: dispatch
   }
 }
 

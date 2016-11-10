@@ -185,3 +185,45 @@ body{
   font-size: 10px;
 }
 
+.top-margin-10{
+  margin-top: 10px;
+}
+
+.hour_price{
+  margin-top: 0;
+}
+
+.heart{
+  color: #F1E8E8;
+  background-color: gray;
+  border: 1px solid #D0B8B8;
+}
+
+.active-heart{
+  background-color: #D24949;
+  color: white;
+}
+
+.bottom-like-heart{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.relative{
+  position: relative;
+}
+
+.invited-users{
+  background-color: #7D7C7C;
+  color: white;
+  border: 1px solid #D0B8B8;
+}
+
+.margin-right-10{
+  margin-right: 10px;
+}
+
+.introduction-bottom{
+  margin-bottom: 25px;
+}

@@ -2,6 +2,7 @@ import * as types from '../constants/types';
 import * as routePath from '../constants/routePath';
 import 'whatwg-fetch';
 import { push } from 'react-router-redux';
+import Immutable from 'immutable';
 // import _ from 'lodash';
 
 export function pendingJobs() {
@@ -63,10 +64,6 @@ export function newPostJob({title, budget, categories, payType, description, las
       type: types.SUCCESS_CREATE_JOB,
       data: {}
     })
-
-       
-
-
     dispatch(push('/post?active=pendingJobs'));
   }
 }
@@ -211,9 +208,10 @@ export function invitedJobUserDetails(ids) {
       promises.push(promise)
     })
     return Promise.all(promises).then(() => {
+      const ds = Immutable.fromJS(sortingData(datas, ids, 'user_id'))
       dispatch({
         type: types.INVITED_JOBS_USER_DETAILS_SUCCESS,
-        data: sortingData(datas, ids, 'user_id')
+        data: ds
       })
     });
   }
