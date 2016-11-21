@@ -2,7 +2,7 @@ import * as types from '../constants/types';
 import 'whatwg-fetch';
 
 // processType mean: like or unlike
-export function likeUnlikeUser(user_id, is_liked=true) {
+export function likeUnlikeUser(user_id, is_liked, actionType='invitedUser') {
   const uri = is_liked ? '/users/unlike' : '/users/like'
   return function(dispatch){
     const url = API_URL + uri;
@@ -20,10 +20,17 @@ export function likeUnlikeUser(user_id, is_liked=true) {
       })
       .then(function(data){
         if (data.result==0){
-          dispatch({
-            type: types.INVITED_JOBS_USER_UPDATE_LIKE,
-            user_id: user_id
-          })
+          if(actionType==='invitedUser'){
+            dispatch({
+              type: types.INVITED_JOBS_USER_UPDATE_LIKE,
+              user_id: user_id
+            })
+          }else{
+            dispatch({
+              type: types.SEARCH_USER_DETAILS_LIKE,
+              user_id: user_id
+            })
+          }
         }else{
           dispatch({
             type: types.INVITED_JOBS_USER_DETAILS_ERROR,

@@ -56,7 +56,7 @@ export function newPostJob({title, budget, categories, payType, description, las
   
     const hash = {title: title, description: description, currency: 1, budget: fixed_price, hour_rate: hour_rate, pay_type: payType, category: categories, lasting: lasting, privacy: privacy}
     
-    alert(JSON.stringify(hash))
+    // alert(JSON.stringify(hash))
 
   return function(dispatch){
     dispatch({ type: types.CREATE_JOB })
@@ -211,6 +211,63 @@ export function invitedJobUserDetails(ids) {
       const ds = Immutable.fromJS(sortingData(datas, ids, 'user_id'))
       dispatch({
         type: types.INVITED_JOBS_USER_DETAILS_SUCCESS,
+        data: ds
+      })
+    });
+  }
+}
+
+export function searchJobUserDetails(ids) {
+  return function(dispatch){
+    let promises = [];
+
+    dispatch({ type: types.SEARCH_USER_DETAILS })
+    const url = API_URL + '/jobs/invitedJobsUserProfile'
+    let datas = []
+    ids.map(function(id, index){
+      let promise = fetch(url, {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            id: id
+          })
+        })
+        .then(function(response){
+          return(response.json());
+        })
+        .then(function(data){
+          if (data.result==0){
+            const arr = {
+              first_name: data.first_name,
+              last_name: data.last_name,
+              user_id: data.user_id,
+              introduction: data.introduction,
+              currency: data.currency,
+              hour_rate: data.hour_rate,
+              level: data.level,
+              profile_picture: data.profile_picture,
+              is_liked: data.is_liked
+            }
+            datas.push(arr)
+          }else{
+            dispatch({
+              type: types.SEARCH_USER_DETAILS_ERROR
+            })
+          }
+        })
+        .catch(function(error){
+          console.log("Opps...", "Error while SEARCH_USER_DETAILS access:: " + error);
+        })
+      promises.push(promise)
+    })
+    return Promise.all(promises).then(() => {
+      const ds = Immutable.fromJS(sortingData(datas, ids, 'user_id'))
+      dispatch({
+        type: types.SEARCH_USER_DETAILS_SUCCESS,
         data: ds
       })
     });

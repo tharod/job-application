@@ -8,6 +8,8 @@ import pendingJobDetails from './pendingJobDetails';
 import createJobs from './createJobs';
 import invitedJobs from './invitedJobs';
 import invitedJobUserDetails from './invitedJobUserDetails';
+import searchUsers from './searchUsers';
+import searchUserDetails from './searchUserDetails';
 
 import { reducer as formReducer } from 'redux-form';
 
@@ -17,6 +19,8 @@ const rootReducer = combineReducers({
   routing: routerReducer,
   auth: auth,
   forgotPassword: forgotPassword,
+  searchUsers: searchUsers,
+  searchUserDetails: searchUserDetails,
   invitedJobs: invitedJobs,
   invitedJobUserDetails: invitedJobUserDetails,
   pendingJobs: pendingJobs,

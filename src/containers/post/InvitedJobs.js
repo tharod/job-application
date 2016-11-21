@@ -9,6 +9,7 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import _ from 'lodash';
 
 import InvitedJobUsers from './InvitedJobUsers';
+import SearchJobUsers from './SearchJobUsers';
 
 const styles = {
   slide: {
@@ -52,6 +53,7 @@ export class InvitedJobs extends React.Component {
 
   render() {
     const invitedJobSubmitting = this.props.invitedJobs.get('submitting')
+    const searchUsersSubmitting = this.props.searchUsers.get('submitting')
     return (
       <div>
         <Tabs
@@ -75,7 +77,9 @@ export class InvitedJobs extends React.Component {
           </div>
           
           <div style={styles.slide}>
-            Search Page
+            {
+              (searchUsersSubmitting) ? 'Loading search users...' : <SearchJobUsers searchUsers={this.props.searchUsers} jobActions={this.props.jobActions}/>
+            }
           </div>
         </SwipeableViews>
       </div>
@@ -85,7 +89,8 @@ export class InvitedJobs extends React.Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    invitedJobs: state.getIn(['invitedJobs']) 
+    invitedJobs: state.getIn(['invitedJobs']),
+    searchUsers: state.getIn(['searchUsers'])
   }
 }
 
