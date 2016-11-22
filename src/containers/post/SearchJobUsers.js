@@ -150,7 +150,7 @@ export class SearchJobUsers extends React.Component {
           </form>
         </div>
 
-        <div className='row'>
+        <div className='col-xs-12 no-padding'>
           <InfiniteScroll loadingMore={this.state.loadingMore} elementIsScrollable={false} loadMore={this._loadMore}>
               {this._renderUsers()}
           </InfiniteScroll>
