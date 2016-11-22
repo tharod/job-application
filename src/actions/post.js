@@ -160,6 +160,41 @@ export function invitedJobs(job_id) {
   }
 }
 
+export function searchUsers(search_key) {
+  return function(dispatch){
+    dispatch({ type: types.SEARCH_USERS })
+    const url = API_URL + '/users/searchUsers'
+    fetch(url, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({search: search_key})
+      })
+      .then(function(response){
+        return(response.json());
+      })
+      .then(function(data){
+        if (data.result==0){
+          dispatch({
+            type: types.SEARCH_USERS_SUCCESS,
+            data: data
+          })
+        }else{
+          dispatch({
+            type: types.SEARCH_USERS_ERROR,
+            data: data
+          })
+        }
+      })
+      .catch(function(error){
+        console.log("Opps...", "Error while invitedJobs access:: " + error);
+      })
+  }
+}
+
 export function invitedJobUserDetails(ids) {
   return function(dispatch){
     let promises = [];
@@ -250,8 +285,10 @@ export function searchJobUserDetails(ids) {
               hour_rate: data.hour_rate,
               level: data.level,
               profile_picture: data.profile_picture,
-              is_liked: data.is_liked
+              is_liked: data.is_liked,
+              invited: data.invited
             }
+            console.log("========data.invited=========", arr)
             datas.push(arr)
           }else{
             dispatch({

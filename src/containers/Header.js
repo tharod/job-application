@@ -38,7 +38,7 @@ class Header extends React.Component {
           </LinkContainer>
 
           <LinkContainer to={{ pathname: routePath.POST_JOB }} className="nav-link">
-            <NavItem>Post Job</NavItem>
+            <NavItem>Posts</NavItem>
           </LinkContainer>
 
           <LinkContainer to={{ pathname: '#' }} className="nav-link" onClick={(e)=> this.handleClick(e)}>

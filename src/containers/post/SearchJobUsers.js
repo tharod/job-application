@@ -16,6 +16,8 @@ const validate = values => {
     errors.search = 'Required'
   } else if(values.search.length > 50){
     errors.search = 'Max 50 char'
+  } else if(values.search.length < 3){
+    errors.search = 'Min 3 char'
   }
 
   return errors
@@ -28,6 +30,7 @@ export class SearchJobUsers extends React.Component {
     this._loadMore = this._loadMore.bind(this);
     this.likeUnlikeUser = this.likeUnlikeUser.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleInvite = this.handleInvite.bind(this)
     this.state = {
       totalRecord: this.props.searchUsers.get('user_id').count(),
       currentPage: 0,
@@ -64,6 +67,10 @@ export class SearchJobUsers extends React.Component {
     this.props.userActions.likeUnlikeUser(user_id, is_liked, 'searchUsers')
   }
 
+  handleInvite(user_id){
+    this.props.userActions.inviteUserHandler(user_id)
+  }
+
   _renderUsers(){
     return this.props.searchUserDetails.getIn(['users']).toJS().map((user, index) => {
       return(
@@ -95,8 +102,8 @@ export class SearchJobUsers extends React.Component {
 
               <div className='col-xs-6 bottom-like-heart'>
                 <div className='pull-right'>
-                  <button className='margin-right-10 invited-users'>
-                    Invite
+                  <button className={`${user.invited ? 'margin-right-10 invited-users' : 'margin-right-10'}`} onClick={() => this.handleInvite(user.user_id)}>
+                    {user.invited ? 'Invited' : 'Invite'}
                   </button>
 
                   <button className={user.is_liked ? 'active-heart' : 'heart'} onClick={() => this.likeUnlikeUser(user.user_id, user.is_liked)}>
@@ -123,27 +130,31 @@ export class SearchJobUsers extends React.Component {
   }
 
   handleSubmit({search}) {      
-    // this.props.actions.forgotPassword({email})
+    this.props.jobActions.searchUsers(search)
   }
 
   render() {
     const { handleSubmit } = this.props;
     return (
       <div>
-        <form onSubmit={handleSubmit(this.handleSubmit)} >
-          <div className="col-xs-12 no-padding">
-            <div className="col-xs-9 no-padding">
-              <Field name="search" className='' component={this.renderField} placeholder="Search" maxLength='50'/>
+        <div className='row'>
+          <form onSubmit={handleSubmit(this.handleSubmit)} >
+            <div className="col-xs-12 no-padding">
+              <div className="col-xs-9">
+                <Field name="search" className='' component={this.renderField} placeholder="Search" maxLength='50'/>
+              </div>
+              <div className="col-xs-3 no-padding">
+                <button type="submit" className="btn btn-default btn-sm">Search</button>
+              </div>
             </div>
-            <div className="col-xs-3">
-              <button type="submit" className="btn btn-default btn-sm">Search</button>
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
 
-        <InfiniteScroll loadingMore={this.state.loadingMore} elementIsScrollable={false} loadMore={this._loadMore}>
-            {this._renderUsers()}
-        </InfiniteScroll>
+        <div className='row'>
+          <InfiniteScroll loadingMore={this.state.loadingMore} elementIsScrollable={false} loadMore={this._loadMore}>
+              {this._renderUsers()}
+          </InfiniteScroll>
+        </div>
       </div>
     );
   }

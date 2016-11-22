@@ -44,3 +44,12 @@ export function likeUnlikeUser(user_id, is_liked, actionType='invitedUser') {
   }
 }
 
+export function inviteUserHandler(user_id) {
+  return function(dispatch){
+    dispatch({
+      type: types.SEARCH_USER_INVITE,
+      user_id: user_id
+    })
+  }
+}
+

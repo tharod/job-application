@@ -26,6 +26,15 @@ export default function searchUserDetails(state = initialState, action) {
       return state.merge({ submitting: false, message: data.message })
     case types.SEARCH_USER_DETAILS_RESET:
       return initialState
+    case types.SEARCH_USER_INVITE:
+      const index = state.get('users').findIndex(list => {
+        return list.get('user_id') === action.user_id;
+      });
+
+      if (index===-1){
+        return state
+      }
+      return state.setIn(['users', index, 'invited'], !state.getIn(['users', index, 'invited']))
     default:
       return state;
   }
